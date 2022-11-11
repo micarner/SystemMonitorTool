@@ -1,5 +1,6 @@
-package com.mcarner.systemmonitortool.system;
+package com.mcarner.systemmonitortool.issue;
 
+import com.mcarner.systemmonitortool.system.System;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Issue {
 
     @Column(name = "details", length = 2550)
     private String details;
+
 
 
 

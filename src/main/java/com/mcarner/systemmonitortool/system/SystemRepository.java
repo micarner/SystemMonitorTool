@@ -1,2 +1,6 @@
-package com.mcarner.systemmonitortool.system;public interface SystemRepository {
+package com.mcarner.systemmonitortool.system;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SystemRepository extends JpaRepository<System,Long> {
 }
