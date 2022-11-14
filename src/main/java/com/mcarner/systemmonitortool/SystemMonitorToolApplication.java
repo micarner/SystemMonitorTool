@@ -11,10 +11,11 @@ public class SystemMonitorToolApplication {
     }
 
     //TODO: Create management area to create Systems and link them together by severity
-    //  - Create controller
-    //  - Create simple frontend page
-    //      x Grid of system cards
+    //  - [BACKEND]
+    //      - Setup automatically with Spring Data Rest
+    //  - Frontend page
     //      x Add new systems
+    //      x Grid of system cards
     //  - Systems
     //      - https://github.com/marmelab/react-admin/blob/master/examples/crm/src/companies/CompanyCreate.tsx
     //      - Create
