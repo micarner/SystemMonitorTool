@@ -10,17 +10,35 @@ public class SystemMonitorToolApplication {
         SpringApplication.run(SystemMonitorToolApplication.class, args);
     }
 
+    //TODO:
+    //  - Create systems page
+    //      - Create page
+    //      - Add new route
+    //  - Edit systems page
+
     //TODO: Create management area to create Systems and link them together by severity
-    //  - [BACKEND]
-    //      - Setup automatically with Spring Data Rest
+    //  x [BACKEND]
+    //      x Setup automatically with Spring Data Rest
     //  - Frontend page
     //      x Add new systems
     //      x Grid of system cards
     //  - Systems
     //      - https://github.com/marmelab/react-admin/blob/master/examples/crm/src/companies/CompanyCreate.tsx
+    //      - https://marmelab.com/react-admin-crm/
     //      - Create
     //      - Click card to see more info
     //      - edit system info
+    //  - Systems have Issues
+    //  - System have Incidents
+    //      - Set up filters to determine what creates an incident
+    //          - Number of times it's triggered
+    //          - How long it's triggered for
+    //          - Percentage reached
+    //      - Reuse Debuggy stuff
+    //          - login, users, permissions, issue = incident
+    //  - Notifications
+    //      - Slack, direct or in channel
+    //      - Emails
 
 
     //TODO: NEEDS

@@ -4,7 +4,7 @@ import com.mcarner.systemmonitortool.issue.Issue;
 import com.mcarner.systemmonitortool.system.link.Link;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
 import com.mcarner.systemmonitortool.system.values.STATE;
-import com.mcarner.systemmonitortool.system.values.Tag;
+import com.mcarner.systemmonitortool.system.tags.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

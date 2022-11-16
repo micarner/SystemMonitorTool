@@ -1,7 +1,11 @@
 import {Box, Button, Card, CardContent, Divider, Grid, Paper, Typography} from "@mui/material";
 import {useState} from "react";
+import {Link as RouterLink} from "react-router-dom";
+
 
 export default function DashboardPage(props) {
+
+
 
     const [cards, setCards] = useState([
         {
@@ -42,12 +46,19 @@ export default function DashboardPage(props) {
     return (
         <>
             <Box className={"dashboard"}>
-                <Button onClick={()=> setCards([])}>Reset</Button>
-                <Button onClick={addSystem}>Add System</Button>
+                {/*<Button onClick={()=> setCards([])}>Reset</Button>*/}
+                <Button
+                    {...{
+                        key: "AddSystem",
+                        color: "inherit",
+                        to: "/system/add",
+                        component: RouterLink,
+                    }}
+                >Add System</Button>
             </Box>
             <Grid container spacing={2}>
-                {cards.map((card,index) => {
-                    const { id, name, importance, state } = card;
+                {cards.map((card, index) => {
+                    const {id, name, importance, state} = card;
                     return (<Grid item>
                         <Card key={index}>
                             <CardContent>

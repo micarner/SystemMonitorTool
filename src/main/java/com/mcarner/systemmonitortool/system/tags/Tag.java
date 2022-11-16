@@ -1,4 +1,4 @@
-package com.mcarner.systemmonitortool.system.values;
+package com.mcarner.systemmonitortool.system.tags;
 
 import lombok.AccessLevel;
 import lombok.Getter;
