@@ -1,8 +1,6 @@
 package com.mcarner.systemmonitortool.system.tags;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -11,6 +9,8 @@ import java.util.Objects;
 @Setter
 @Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tag {
     @Setter(AccessLevel.NONE)
     @Id

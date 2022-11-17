@@ -39,11 +39,11 @@ public class System {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false, unique = true)
-    private STATE state;
+    private STATE state = STATE.OK;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "importance", nullable = false, unique = true)
-    private IMPORTANCE importance;
+    private IMPORTANCE importance = IMPORTANCE.MEDIUM;
 
     @OneToOne(mappedBy = "system", orphanRemoval = true)
     private Link link;

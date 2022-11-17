@@ -5,7 +5,7 @@ import {
     Card,
     CardActions,
     CardContent,
-    Checkbox,
+    Checkbox, FormControl, InputLabel,
     ListItemText,
     MenuItem,
     Select,
@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import {AppContext} from "../../index";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 
 
 export default function AddSystem(props){
@@ -23,25 +23,38 @@ export default function AddSystem(props){
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState('');
-    const addSystem = useMutation({
+    const [importance, setImportance] = useState('');
+    const [tags, setTags] = useState([]);
+    const mutation = useMutation({
         mutationFn: newSystem => {
-            return axios.post(baseUrl + "")
+            return axios.post(baseUrl + "api/system/new", newSystem);
         }
     })
 
     const { isLoading: importanceIsLoading, data: importanceData } = useQuery('importance', () => {
-        // console.log(baseUrl + "/importance")
-        return axios.get(baseUrl + "/importance")
-    })
+        // console.log(baseUrl + "api/importance")
+        return axios.get(baseUrl + "api/importance")
+    }, {staleTime: Infinity})
 
     const { isLoading: tagsIsLoading, data: tagsData } = useQuery('tags', () => {
-        // console.log(baseUrl + "/importance")
-        return axios.get(baseUrl + "/tags")
-    })
+        // console.log(baseUrl + "api/importance")
+        return axios.get(baseUrl + "api/tags")
+    }, {staleTime: Infinity})
+
+    useEffect(() => {
+    //     // console.log(`name:${name},description:${description},importance:${importance},tags:${tags},`)
+        console.log({name:name,description:description,importance:importance,tags:tags})
+    }, [name,description,importance,tags]);
 
     if (importanceIsLoading && tagsIsLoading){
         return <h2>Loading...</h2>
     }
+
+    if (tagsData?.data.length === 0){
+        tagsData.data = [{id:0,name:"None"}]
+    }
+
+
 
 
     return (
@@ -53,20 +66,28 @@ export default function AddSystem(props){
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         sx={{minWidth: "300px;"}}/>
-                    <TextField select label={"Importance"} sx={{minWidth: "100px"}}
-                               defaultValue={importanceData?.data[1]}>
-                        {importanceData?.data.map(option => {
-                            return <MenuItem key={option} value={option}>{option}</MenuItem>
-                        })}
-                    </TextField>
-                    <Select>
-                        {tagsData?.data.map(option => (
-                            <MenuItem key={option} value={option}>{option}
-                                <Checkbox/>
-                                <ListItemText primary={"option"}/>
-                            </MenuItem>
-                        ))}
-                    </Select>
+                    <FormControl>
+                        <InputLabel>Importance</InputLabel>
+                        <Select label="Importance" sx={{minWidth: "200px"}}
+                                defaultValue={importanceData?.data[1]} value={importance}
+                                onChange={(e) => setImportance(e.target.value)}>
+                            {importanceData?.data.map(option => {
+                                return <MenuItem key={option} value={option}>{option}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel>Tags</InputLabel>
+                        <Select multiple value={tags} label="Tags" sx={{minWidth:"200px;"}} onChange={(e) => setTags(e.target.value)}>
+                            {tagsData?.data.map(option => (
+                                <MenuItem key={option.name} value={option.id}>
+                                    {option.name}
+                                    {/*<Checkbox/>*/}
+                                    {/*<ListItemText primary={"option"}>{option.name}</ListItemText>*/}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </Stack>
                 <TextField
                     label={"Description"}
@@ -78,7 +99,9 @@ export default function AddSystem(props){
             <CardActions>
                 <Button
                     startIcon={<SaveIcon/>}
-                    onClick={}
+                    onClick={() => {
+                        mutation.mutate({name:name,description:description,importance:importance,tags:tags})
+                    }}
                 >Add System</Button>
             </CardActions>
         </Card>

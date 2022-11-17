@@ -1,5 +1,6 @@
 package com.mcarner.systemmonitortool.system;
 
+import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +20,14 @@ public class SystemController {
     private final SystemService systemService;
 
     @PostMapping("/system/new")
-    ResponseEntity<?> createNewSystem(@RequestBody System newSystem){
-        System newlyCreatedSystem = systemService.upsertSystem(newSystem);
+    ResponseEntity<?> createNewSystem(@RequestBody SystemCreateDto systemCreateDto){
+        System newlyCreatedSystem = systemService.createSystem(systemCreateDto);
         log.info("Created new system: ({}) - {}",newlyCreatedSystem.getId(),newlyCreatedSystem.getName());
         return ResponseEntity.ok().body(newlyCreatedSystem);
     }
 
     @PostMapping("/system/update")
-    ResponseEntity<?> updateSystem(@RequestBody System updateSystem){
+    ResponseEntity<?> updateSystem(@RequestBody SystemDto updateSystem){
         System updatedSystem = systemService.upsertSystem(updateSystem);
         log.info("Created new system: ({}) - {}",updatedSystem.getId(),updatedSystem.getName());
         return ResponseEntity.ok().body(updatedSystem);
