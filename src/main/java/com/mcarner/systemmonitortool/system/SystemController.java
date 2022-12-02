@@ -1,6 +1,7 @@
 package com.mcarner.systemmonitortool.system;
 
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
+import com.mcarner.systemmonitortool.system.dto.SystemDto;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +12,25 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 @Slf4j
 @RequiredArgsConstructor
 public class SystemController {
 
     private final SystemService systemService;
+
+
+    @GetMapping("/system/{id}")
+    ResponseEntity<?> getSystem(@PathVariable Long id){
+        return ResponseEntity.ok().body(systemService.getSystem(id));
+    }
+
+
+    @GetMapping("/system")
+    ResponseEntity<?> getSystems(){
+        return ResponseEntity.ok().body(systemService.getAllSystems());
+    }
 
     @PostMapping("/system/new")
     ResponseEntity<?> createNewSystem(@RequestBody SystemCreateDto systemCreateDto){

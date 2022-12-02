@@ -1,3 +1,6 @@
+import {Navigate, useParams} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {AppContext} from "../../index";
 import {useMutation, useQuery} from "react-query";
 import axios from "axios";
 import {
@@ -5,31 +8,36 @@ import {
     Card,
     CardActions,
     CardContent,
-    Checkbox, FormControl, InputLabel,
-    ListItemText,
+    FormControl,
+    InputLabel,
     MenuItem,
     Select,
     Stack,
     TextField
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import {AppContext} from "../../index";
-import {useContext, useEffect, useState} from "react";
+import ErrorMsgElement from "../common/ErrorMsgElement";
 
+export default function EditSystemPage(props){
 
-export default function AddSystem(props){
+    const params = useParams();
 
     const {baseUrl} = useContext(AppContext);
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState('');
-    const [importance, setImportance] = useState('');
+    const [importance, setImportance] = useState('MEDIUM');
     const [tags, setTags] = useState([]);
     const mutation = useMutation({
-        mutationFn: newSystem => {
-            return axios.post(baseUrl + "api/system/new", newSystem);
+        mutationFn: updateSystem => {
+            return axios.post(baseUrl + "api/system/update", updateSystem);
         }
     })
+
+    const { isLoading: systemIsLoading, data: systemData, status: systemQueryStatus } = useQuery(`system-${params.systemId}`, () => {
+        // console.log(baseUrl + "api/importance")
+        return axios.get(baseUrl + `api/system/${params.systemId}`)
+    }, {staleTime: Infinity})
 
     const { isLoading: importanceIsLoading, data: importanceData } = useQuery('importance', () => {
         // console.log(baseUrl + "api/importance")
@@ -42,17 +50,50 @@ export default function AddSystem(props){
     }, {staleTime: Infinity})
 
     useEffect(() => {
-    //     // console.log(`name:${name},description:${description},importance:${importance},tags:${tags},`)
-        console.log({name:name,description:description,importance:importance,tags:tags})
+        //     // console.log(`name:${name},description:${description},importance:${importance},tags:${tags},`)
+        //     console.log({name:name,description:description,importance:importance,tags:tags})
     }, [name,description,importance,tags]);
 
-    if (importanceIsLoading && tagsIsLoading){
+    const [errMsg, setErrMsg] = useState('');
+    const [saveDisabled, setSaveDisabled] = useState(false);
+    useEffect(() => {
+        if (name !== ''){
+            setErrMsg('')
+            setSaveDisabled(false)
+        } else {
+            setErrMsg("System must have a name")
+            setSaveDisabled(true)
+        }
+    }, [name]);
+
+    //Load systemData into state
+    useEffect(() => {
+        if (systemQueryStatus === 'success'){
+            setName(systemData?.data.name)
+            setDescription(systemData?.data.description)
+            setImportance(systemData?.data.importance)
+            //Plug in tag ids, that should work.
+            if(systemData?.data.tags !== undefined && systemData?.data.tags !== null){
+                setTags(systemData?.data.tags.map(tag => tag.id))
+            }
+
+        }
+    }, [systemQueryStatus,systemData]);
+
+
+    if (importanceIsLoading && tagsIsLoading && systemIsLoading){
         return <h2>Loading...</h2>
+    }
+
+
+    if (mutation.isSuccess) {
+        return <Navigate to={`/system/${params.systemId}`}/>
     }
 
     if (tagsData?.data.length === 0){
         tagsData.data = [{id:0,name:"None"}]
     }
+
 
 
 
@@ -98,12 +139,15 @@ export default function AddSystem(props){
             </CardContent>
             <CardActions>
                 <Button
+                    disabled={saveDisabled}
                     startIcon={<SaveIcon/>}
                     onClick={() => {
-                        mutation.mutate({name:name,description:description,importance:importance,tags:tags})
+                        mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
                     }}
-                >Add System</Button>
+                >Save System</Button>
+                <ErrorMsgElement errMsg={errMsg}/>
             </CardActions>
+
         </Card>
     )
 }

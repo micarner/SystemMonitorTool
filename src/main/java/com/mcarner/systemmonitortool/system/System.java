@@ -38,11 +38,11 @@ public class System {
     private Set<Issue> issuesToMonitor = new LinkedHashSet<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false, unique = true)
+    @Column(name = "state", nullable = false)
     private STATE state = STATE.OK;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "importance", nullable = false, unique = true)
+    @Column(name = "importance", nullable = false)
     private IMPORTANCE importance = IMPORTANCE.MEDIUM;
 
     @OneToOne(mappedBy = "system", orphanRemoval = true)

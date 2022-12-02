@@ -19,12 +19,10 @@ import {AppContext} from "../../index";
 
 import {useContext} from "react";
 import {useParams} from "react-router-dom";
-import AddSystem from "./AddSystem";
+import AddSystemPage from "./AddSystemPage";
+import ViewSystem from "./ViewSystem";
+import EditSystemPage from "./EditSystem";
 
-
-function ViewSystem() {
-    return null;
-}
 
 export default function SystemPage(props) {
 
@@ -35,10 +33,12 @@ export default function SystemPage(props) {
 
     const conditionalOutput = () => {
         {
-            if (params.systemId === "add") {
-                return <AddSystem/>
+            if (params.systemId === "add" ) {
+                return <AddSystemPage/>
+            } else if (isFinite(params.systemId) && params.edit !== undefined) {
+                return <EditSystemPage/>
             } else if (isFinite(params.systemId)){
-                return <ViewSystem/>
+                return <ViewSystem id={params.systemId}/>
             } else {
                 return <>
                     <CardContent><h2>Invalid System Id</h2></CardContent>

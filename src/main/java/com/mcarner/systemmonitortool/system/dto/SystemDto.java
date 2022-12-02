@@ -1,5 +1,6 @@
-package com.mcarner.systemmonitortool.system;
+package com.mcarner.systemmonitortool.system.dto;
 
+import com.mcarner.systemmonitortool.system.System;
 import com.mcarner.systemmonitortool.system.link.LINK_SEVERITY;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
 import com.mcarner.systemmonitortool.system.values.STATE;

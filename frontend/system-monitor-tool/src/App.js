@@ -25,6 +25,7 @@ function App() {
                 <Route path="" element={<DashboardPage/>}/>
                 <Route path="management" element={<DashboardPage/>}/>
                 <Route path="system/:systemId" element={<SystemPage/>}/>
+                <Route path="system/:systemId/:edit" element={<SystemPage/>}/>
             </Routes>
 
 

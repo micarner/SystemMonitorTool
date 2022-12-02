@@ -19,9 +19,22 @@ public class SystemMonitorToolApplication {
 
     //TODO:
     //  - Create systems page
-    //      - Create page
-    //      - Add new route
-    //  - Edit systems page
+    //      x Add system
+    //      x View systems on dashboard
+    //          x Fix origin issues
+    //      - Inspect system
+    //          - Click on system card, go to page with more detailed system info
+    //          - Hover over system for more details
+    //      - Edit systems page
+    //          - Click card and it takes you to systems page
+    //          - Edit button on this page
+    //          - Click that to go to edit system page
+
+    //TODO: Set up issues and script running
+
+    //TODO: Logging and notifications
+
+    //TODO: Link systems
 
     //TODO: Create management area to create Systems and link them together by severity
     //  x [BACKEND]

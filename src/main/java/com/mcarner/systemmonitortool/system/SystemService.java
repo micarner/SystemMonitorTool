@@ -1,9 +1,9 @@
 package com.mcarner.systemmonitortool.system;
 
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
+import com.mcarner.systemmonitortool.system.dto.SystemDto;
 import com.mcarner.systemmonitortool.system.tags.Tag;
 import com.mcarner.systemmonitortool.system.tags.TagRepository;
-import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ public class SystemService {
         System systemToCreate = new System();
         systemToCreate.setName(systemCreateDto.getName());
         systemToCreate.setDescription(systemCreateDto.getDescription());
+//        systemToCreate.setTags(systemCreateDto.getTagIds());
         if (systemCreateDto.getTagIds() != null) {
             systemToCreate.setTags(tagRepository.findTagsByIdIn(systemCreateDto.getTagIds()));
         }
@@ -29,7 +30,13 @@ public class SystemService {
         return systemRepository.save(systemToCreate);
     }
     public System upsertSystem(SystemDto systemDto) {
-        System system = mapper.map(systemDto,System.class);
+        System system = systemRepository.findById(systemDto.getId()).orElseThrow();
+        system.setName(systemDto.getName());
+        system.setDescription(systemDto.getDescription());
+        if (systemDto.getTagIds() != null) {
+            system.setTags(tagRepository.findTagsByIdIn(systemDto.getTagIds()));
+        }
+        system.setImportance(systemDto.getImportance());
         return systemRepository.save(system);
     }
 
@@ -42,5 +49,11 @@ public class SystemService {
     }
 
 
+    public List<System> getAllSystems() {
+        return systemRepository.findAll();
+    }
 
+    public System getSystem(Long id) {
+        return systemRepository.findById(id).orElseThrow();
+    }
 }
