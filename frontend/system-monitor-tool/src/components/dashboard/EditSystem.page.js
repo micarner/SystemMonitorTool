@@ -13,7 +13,7 @@ import {
     MenuItem,
     Select,
     Stack,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import ErrorMsgElement from "../common/ErrorMsgElement";
@@ -101,12 +101,15 @@ export default function EditSystemPage(props){
     return (
         <Card>
             <CardContent>
+                <Typography variant={"h6"}>
+                    System Name: {name}
+                </Typography>
                 <Stack direction={"row"}>
-                    <TextField
-                        label={"Name"}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        sx={{minWidth: "300px;"}}/>
+                    {/*<TextField*/}
+                    {/*    label={"Name"}*/}
+                    {/*    value={name}*/}
+                    {/*    onChange={(e) => setName(e.target.value)}*/}
+                    {/*    sx={{minWidth: "300px;"}}/>*/}
                     <FormControl>
                         <InputLabel>Importance</InputLabel>
                         <Select label="Importance" sx={{minWidth: "200px"}}
@@ -142,7 +145,7 @@ export default function EditSystemPage(props){
                     disabled={saveDisabled}
                     startIcon={<SaveIcon/>}
                     onClick={() => {
-                        mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
+                        mutation.mutate({id:params.systemId,name:name,description:description,importance:importance,tagIds:tags})
                     }}
                 >Save System</Button>
                 <ErrorMsgElement errMsg={errMsg}/>

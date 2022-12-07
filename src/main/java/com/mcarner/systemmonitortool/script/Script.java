@@ -1,4 +1,4 @@
-package com.mcarner.systemmonitortool.issue;
+package com.mcarner.systemmonitortool.script;
 
 import com.mcarner.systemmonitortool.system.System;
 import lombok.AccessLevel;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @ToString
-public class Issue {
+public class Script {
     @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +29,9 @@ public class Issue {
     private String details;
 
 
-
+    //      - [metric or issue]_[status]_[system name]_[issue name]_[value/metrics]_[status detail]
+    //      - metricname=value;warn;crit;min;max
+    //      - Multiple metrics: count1=42|count2=21;23;27|count3=73
 
 
     @ManyToOne

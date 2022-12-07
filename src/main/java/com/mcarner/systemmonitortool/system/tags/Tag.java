@@ -9,6 +9,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @Entity
+@Table(name="tag")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag {

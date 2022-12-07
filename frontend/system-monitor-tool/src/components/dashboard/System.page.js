@@ -19,9 +19,9 @@ import {AppContext} from "../../index";
 
 import {useContext} from "react";
 import {useParams} from "react-router-dom";
-import AddSystemPage from "./AddSystemPage";
-import ViewSystem from "./ViewSystem";
-import EditSystemPage from "./EditSystem";
+import AddSystemPage from "./AddSystem.page";
+import ViewSystemPage from "./ViewSystem.Page";
+import EditSystemPage from "./EditSystem.page";
 
 
 export default function SystemPage(props) {
@@ -38,7 +38,7 @@ export default function SystemPage(props) {
             } else if (isFinite(params.systemId) && params.edit !== undefined) {
                 return <EditSystemPage/>
             } else if (isFinite(params.systemId)){
-                return <ViewSystem id={params.systemId}/>
+                return <ViewSystemPage id={params.systemId}/>
             } else {
                 return <>
                     <CardContent><h2>Invalid System Id</h2></CardContent>

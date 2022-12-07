@@ -8,7 +8,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import {Edit} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 
-export default function ViewSystem(props){
+export default function ViewSystemPage(props){
 
     const {baseUrl} = useContext(AppContext);
     const navigate = useNavigate();

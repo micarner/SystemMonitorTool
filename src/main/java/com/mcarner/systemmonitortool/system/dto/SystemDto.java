@@ -1,5 +1,6 @@
 package com.mcarner.systemmonitortool.system.dto;
 
+
 import com.mcarner.systemmonitortool.system.System;
 import com.mcarner.systemmonitortool.system.link.LINK_SEVERITY;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
@@ -17,7 +18,7 @@ public class SystemDto implements Serializable {
     private final Long id;
     private final String name;
     private final String description;
-    private final Set<IssueDto> issuesToMonitor;
+    private final Set<ScriptDto> issuesToMonitor;
     private final STATE state;
     private final IMPORTANCE importance;
     private final Long linkId;
@@ -25,11 +26,9 @@ public class SystemDto implements Serializable {
     private final Long linkReliesOnId;
     private final Set<Long> tagIds;
 
-    /**
-     * A DTO for the {@link com.mcarner.systemmonitortool.issue.Issue} entity
-     */
+
     @Data
-    public static class IssueDto implements Serializable {
+    public static class ScriptDto implements Serializable {
         private final Long id;
         private final String name;
         private final String description;
