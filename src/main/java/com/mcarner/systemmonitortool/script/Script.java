@@ -42,7 +42,7 @@ public class Script {
     //In ms //Default every 5 min
     private Long frequencyToCheck = 300000L;
 
-    @Column(name = "script_path")
-    private String scriptPath;
+    @Column(name = "filename")
+    private String filename;
 
 }
