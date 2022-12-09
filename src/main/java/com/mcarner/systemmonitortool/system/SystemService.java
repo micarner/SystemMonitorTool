@@ -1,5 +1,7 @@
 package com.mcarner.systemmonitortool.system;
 
+import com.mcarner.systemmonitortool.script.ScriptRepository;
+import com.mcarner.systemmonitortool.script.dto.ScriptDto;
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.dto.SystemDto;
 import com.mcarner.systemmonitortool.system.tags.Tag;
@@ -16,6 +18,7 @@ public class SystemService {
 
     private final SystemRepository systemRepository;
     private final TagRepository tagRepository;
+    private final ScriptRepository scriptRepository;
     private final ModelMapper mapper;
 
     public System createSystem(SystemCreateDto systemCreateDto){
@@ -55,5 +58,10 @@ public class SystemService {
 
     public System getSystem(Long id) {
         return systemRepository.findById(id).orElseThrow();
+    }
+
+    public List<ScriptDto> getSystemScripts(Long id){
+        //Return Script details as well as list of metrics and values and whatnot
+        return scriptRepository.findScriptsBySystemIdOrderByIdAsc(id);
     }
 }

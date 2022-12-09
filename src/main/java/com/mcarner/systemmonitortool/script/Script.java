@@ -1,5 +1,6 @@
 package com.mcarner.systemmonitortool.script;
 
+import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.system.System;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -48,5 +51,11 @@ public class Script {
 
     @Column(name = "last_ran")
     private LocalDateTime lastRan;
+
+    @OneToMany(mappedBy = "script", orphanRemoval = true)
+    @OrderBy("script_id asc")
+    private List<ScriptOutput> scriptOutputs = new ArrayList<>();
+
+
 
 }

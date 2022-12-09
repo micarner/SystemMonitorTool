@@ -23,6 +23,8 @@ public class PowershellRunner implements ScriptRunner {
     //  - Run the scripts
     //  - Log output to
 
+    public String pathToPowershell = "C:\\Program Files\\PowerShell\\7\\pwsh.exe";
+
     //(In async run method)
     //Run script
     //Gather ScriptOutput
@@ -32,7 +34,7 @@ public class PowershellRunner implements ScriptRunner {
     public Future<ScriptOutput> run(String scriptFilename) {
         //String command = "powershell.exe  your command";
         //Getting the version
-        String command = "powershell \"" + ScriptFinderService.SCRIPTS_FOLDER + "\\" + scriptFilename + "\"";
+        String command = "\"" + pathToPowershell + "\" \"" + ScriptFinderService.SCRIPTS_FOLDER + "\\" + scriptFilename + "\"";
         ScriptOutput scriptOutput = new ScriptOutput();
         scriptOutput.setFilename(scriptFilename);
         String line;

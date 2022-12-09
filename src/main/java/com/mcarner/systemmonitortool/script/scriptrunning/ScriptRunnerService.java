@@ -27,6 +27,7 @@ public class ScriptRunnerService {
     public final SystemRepository systemRepo;
     public final PowershellRunner pshellRunner = new PowershellRunner();
 
+
     @Scheduled(fixedRate = 6000)
     public void runScripts(){
         //TODO: If you need performance, iterate through the table
@@ -65,6 +66,7 @@ public class ScriptRunnerService {
             //Set Script info
             //If System is null, the systemId isn't set right.
             script.setName(scriptOutput.getScriptName());
+            script.getScriptOutputs().add(scriptOutput);
             script.setSystem(systemRepo.findSystemById(scriptOutput.getSystemId()));
 
             scriptOutputRepo.save(scriptOutput);

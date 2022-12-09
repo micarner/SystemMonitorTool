@@ -53,9 +53,12 @@ public class SystemMonitorToolApplication {
     //  - Fix TAGS preloaded in resources.import.sql (not working since switching to MySQL
     //      - FIXED, changed data.sql to import.sql
 
-    //Link Script to Systems
+    //TODO: Link Script to Systems
+    //  - ISSUES:
+    //      - Bidirectional relationship between script and scriptoutput is causing issues:
+    //        failed to lazily initialize a collection of role:
     //  - View System
-    //      - Section for Issues
+    //      x Section for Issues
     //      - List names of issues and status
     //  - Dashboard
     //      - # metrics, # Issues being monitored

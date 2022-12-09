@@ -1,6 +1,7 @@
 package com.mcarner.systemmonitortool.script.scriptoutput;
 
 
+import com.mcarner.systemmonitortool.script.Script;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
 import com.mcarner.systemmonitortool.script.scriptrunning.Status;
 import lombok.Getter;
@@ -40,8 +41,7 @@ public class ScriptOutput {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "system_id")
-    private Long systemId;
+
 
     @Column(name = "script_name")
     private String scriptName;
@@ -64,6 +64,15 @@ public class ScriptOutput {
 
     @Transient
     private ArrayList<String> rawScriptOutput;
+
+
+    @ManyToOne
+    @JoinColumn(name = "script_id")
+    private Script script;
+
+
+    @Column(name = "system_id")
+    private Long systemId;
 
 }
 

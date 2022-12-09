@@ -26,6 +26,10 @@ public class SystemController {
         return ResponseEntity.ok().body(systemService.getSystem(id));
     }
 
+    @GetMapping("/system/{id}/scripts")
+    ResponseEntity<?> getSystemScripts(@PathVariable Long id){
+        return ResponseEntity.ok().body(systemService.getSystemScripts(id));
+    }
 
     @GetMapping("/system")
     ResponseEntity<?> getSystems(){
