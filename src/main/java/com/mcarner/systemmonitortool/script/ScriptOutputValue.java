@@ -1,6 +1,6 @@
 package com.mcarner.systemmonitortool.script;
 
-import com.mcarner.systemmonitortool.script.ScriptOutput;
+import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

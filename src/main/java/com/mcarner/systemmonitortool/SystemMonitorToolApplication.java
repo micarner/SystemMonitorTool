@@ -31,22 +31,36 @@ public class SystemMonitorToolApplication {
     //          x Click card and it takes you to systems page
     //          x Edit button on this page
 
-    //TODO: Set up issues and script running
-    //  - Fix TAGS preloaded in resources.data.sql (not working since switching to MySQL
-    //  - How to run powershell script?
-    //      - ScriptFinder - Monitors script folder, discovers new scripts, loads in database to be run
-    //      - ScriptExecutor - Look in database table, run script on set interval
-    //      - ScriptOutput - Object containing parsed output, loaded into table
-
-    //      - Run it async and parse echo
-    //      - Get basic example working
+    //Planning phase for script running
+    //  x How to run powershell script?
+    //      x ScriptFinder - Monitors script folder, discovers new scripts, loads in database to be run
+    //      x ScriptRunner - Look in database table, run script on set interval
+    //      x ScriptOutput - Object containing parsed output, loaded into table
+    //      x Run it async and parse echo
+    //      x Get basic example working
     //  - Determine format for returning information
     //      - Like check_mk - https://docs.checkmk.com/latest/en/localchecks.html
-    //      - [metric or issue]_[status]_[system name]_[issue name]_[value/metrics]_[status detail]
+    //      - [metric or issue]_[status]_[system id]_[script name]_[value/metrics]_[status detail]
+    //      - See ScriptOutputParser.java for logic and formatting
     //      - metricname=value;warn;crit;min;max
     //      - Multiple metrics: count1=42|count2=21;23;27|count3=73
-    //  - Successfully run script and get return info
-    //  - Assign issue to System
+
+    //Set up script running
+    //  x Successfully run script and get return info
+    //  x Assign issue to System
+
+    //Fix some stuff before continuing
+    //  - Fix TAGS preloaded in resources.import.sql (not working since switching to MySQL
+    //      - FIXED, changed data.sql to import.sql
+
+    //Link Script to Systems
+    //  - View System
+    //      - Section for Issues
+    //      - List names of issues and status
+    //  - Dashboard
+    //      - # metrics, # Issues being monitored
+    //      - Card Badge displaying Status
+
 
     //TODO: Logging and notifications
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -39,10 +40,13 @@ public class Script {
     private System system;
 
     @Column(name = "frequency_to_check", nullable = false)
-    //In ms //Default every 5 min
-    private Long frequencyToCheck = 300000L;
+    //In ms //Default every 30s
+    private Long frequencyToCheck = 30000L;
 
     @Column(name = "filename")
     private String filename;
+
+    @Column(name = "last_ran")
+    private LocalDateTime lastRan;
 
 }

@@ -1,4 +1,4 @@
-package com.mcarner.systemmonitortool.script;
+package com.mcarner.systemmonitortool.script.scriptoutput;
 
 
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
@@ -6,10 +6,10 @@ import com.mcarner.systemmonitortool.script.scriptrunning.Status;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -21,7 +21,6 @@ public class ScriptOutput {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
 
 
     //TODO: How to handle this? Maybe not at all.
@@ -41,8 +40,8 @@ public class ScriptOutput {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "system_name")
-    private String systemName;
+    @Column(name = "system_id")
+    private Long systemId;
 
     @Column(name = "script_name")
     private String scriptName;
@@ -51,14 +50,20 @@ public class ScriptOutput {
     @Column(name = "details")
     private String details;
 
-    @Column(name = "run_at")
-    private LocalDateTime runAt = LocalDateTime.now();
+    @Column(name = "ran_at")
+    private LocalDateTime ranAt = LocalDateTime.now();
 
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
     @Column(name = "filename")
     private String filename;
+
+    @Column(name = "`values`")
+    private String values;
+
+    @Transient
+    private ArrayList<String> rawScriptOutput;
 
 }
 

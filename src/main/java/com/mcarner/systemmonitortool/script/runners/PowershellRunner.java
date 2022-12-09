@@ -2,17 +2,20 @@ package com.mcarner.systemmonitortool.script.runners;
 
 
 
-import com.mcarner.systemmonitortool.script.ScriptOutput;
+import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptFinderService;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptRunner;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.AsyncResult;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.Future;
 
-
+@Slf4j
 public class PowershellRunner implements ScriptRunner {
 
     //TODO: ScriptChecker
@@ -26,22 +29,21 @@ public class PowershellRunner implements ScriptRunner {
     //Save to database
     //Error handling if stuff aint workin
     @Override
-    public ScriptOutput run(String scriptFilename) {
+    public Future<ScriptOutput> run(String scriptFilename) {
         //String command = "powershell.exe  your command";
         //Getting the version
         String command = "powershell \"" + ScriptFinderService.SCRIPTS_FOLDER + "\\" + scriptFilename + "\"";
         ScriptOutput scriptOutput = new ScriptOutput();
+        scriptOutput.setFilename(scriptFilename);
+        String line;
+        ArrayList<String> stdOutArrayList = new ArrayList<>();
+        ArrayList<String> stdErrorArrayList = new ArrayList<>();
         try {
-
             // Executing the command
             Process powerShellProcess = Runtime.getRuntime().exec(command);
             // Getting the results
             powerShellProcess.getOutputStream().close();
             scriptOutput.setCompletedAt(LocalDateTime.now());
-
-            String line;
-            ArrayList<String> stdOutArrayList = new ArrayList<>();
-            ArrayList<String> stdErrorArrayList = new ArrayList<>();
 
 //            System.out.println("Standard Output:");
             BufferedReader stdout = new BufferedReader(new InputStreamReader(
@@ -69,18 +71,13 @@ public class PowershellRunner implements ScriptRunner {
                 //Throw error
             }
 
-            //Parse stdOutArrayList
-            //Create this part and then move it into Generic ScriptOutputParser class
-            //Make this class return a string
-            //Also need to make Async changes. It wants a future-like class to be returned.
-
-
-
+            scriptOutput.setRawScriptOutput(stdOutArrayList);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Done");
-        return null;
+
+        return new AsyncResult<>(scriptOutput);
+
     }
 }

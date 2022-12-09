@@ -34,7 +34,7 @@ public class ScriptFinderService {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(SCRIPTS_FOLDER))){
             for (Path path : stream) {
                 if (!Files.isDirectory(path)) {
-                    log.info(String.valueOf(path.toAbsolutePath()));
+//                    log.info(String.valueOf(path.toAbsolutePath()));
 
                     //TODO: If there are performance issues, load hashmap with scriptFilenames on init
                     //  and check it before doing any database stuff

@@ -1,10 +1,13 @@
 package com.mcarner.systemmonitortool.script.scriptrunning;
 
 
-import com.mcarner.systemmonitortool.script.ScriptOutput;
+import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import org.springframework.scheduling.annotation.Async;
 
+import java.util.concurrent.Future;
+
 public interface ScriptRunner {
-//    @Async
-    ScriptOutput run(String scriptPath);
+
+    @Async
+    Future<ScriptOutput> run(String scriptPath);
 }
