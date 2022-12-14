@@ -1,5 +1,6 @@
 package com.mcarner.systemmonitortool.system;
 
+import com.mcarner.systemmonitortool.script.dto.UpdateScriptDto;
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.dto.SystemDto;
 import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
@@ -30,6 +31,12 @@ public class SystemController {
     ResponseEntity<?> getSystemScripts(@PathVariable Long id){
         return ResponseEntity.ok().body(systemService.getSystemScripts(id));
     }
+
+    @PutMapping("/scripts")
+    ResponseEntity<?> updateScript(@RequestBody UpdateScriptDto updateScriptRequest){
+        return ResponseEntity.ok().body(systemService.updateScript(updateScriptRequest));
+    }
+
 
     @GetMapping("/system")
     ResponseEntity<?> getSystems(){

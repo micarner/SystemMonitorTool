@@ -17,6 +17,7 @@ import {AppContext} from "../../index";
 import {useContext, useEffect, useState} from "react";
 import ErrorMsgElement from "../common/ErrorMsgElement";
 import {Navigate, useParams} from "react-router-dom"
+import Loading from "../common/Loading";
 
 
 export default function AddSystemPage(props){
@@ -63,7 +64,7 @@ export default function AddSystemPage(props){
     }, [name]);
 
     if (importanceIsLoading && tagsIsLoading){
-        return <h2>Loading...</h2>
+        return <Loading/>
     }
     
     if (mutation.isSuccess) {

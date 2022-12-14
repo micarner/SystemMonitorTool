@@ -1,6 +1,8 @@
 package com.mcarner.systemmonitortool.system;
 
+import com.mcarner.systemmonitortool.script.Script;
 import com.mcarner.systemmonitortool.script.ScriptRepository;
+import com.mcarner.systemmonitortool.script.dto.UpdateScriptDto;
 import com.mcarner.systemmonitortool.script.dto.ScriptDto;
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.dto.SystemDto;
@@ -63,5 +65,20 @@ public class SystemService {
     public List<ScriptDto> getSystemScripts(Long id){
         //Return Script details as well as list of metrics and values and whatnot
         return scriptRepository.findScriptsBySystemIdOrderByIdAsc(id);
+    }
+
+    public ScriptDto updateScript(UpdateScriptDto updateScriptRequest) {
+        Script scriptToUpdate = scriptRepository.findById(updateScriptRequest.getId()).orElseThrow();
+        if (updateScriptRequest.getDescription() != null){
+            scriptToUpdate.setDescription(updateScriptRequest.getDescription());
+        }
+        if (updateScriptRequest.getScriptOutputTimeWindow() != null){
+            scriptToUpdate.setScriptOutputTimeWindow(updateScriptRequest.getScriptOutputTimeWindow());
+        }
+        if (updateScriptRequest.getFrequencyToCheck() != null){
+            scriptToUpdate.setFrequencyToCheck(updateScriptRequest.getFrequencyToCheck());
+        }
+        Script script = scriptRepository.save(scriptToUpdate);
+        return scriptRepository.findScriptById(script.getId());
     }
 }

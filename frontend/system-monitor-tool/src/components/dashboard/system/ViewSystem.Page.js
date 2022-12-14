@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {AppContext} from "../../index";
+import {AppContext} from "../../../index";
 import {useQuery} from "react-query";
 import axios from "axios";
 import {Button, Card, CardActions, CardContent, Divider, Grid, Typography} from "@mui/material";
@@ -8,7 +8,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import {Edit} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import * as PropTypes from "prop-types";
-import StatusBadge from "./StatusBadge";
+import StatusBadge from "../../common/StatusBadge";
+import ScriptCard from "./script/ScriptCard";
+import Loading from "../../common/Loading";
 
 
 export default function ViewSystemPage(props){
@@ -27,7 +29,7 @@ export default function ViewSystemPage(props){
     }, {staleTime: 1000*5})
 
     if (syatemIsLoading && scriptsAreLoading){
-        return <h2>Loading...</h2>
+        return <Loading/>
     }
     console.log(systemData?.data)
 
@@ -68,12 +70,12 @@ export default function ViewSystemPage(props){
                 >Edit System</Button>
             </CardActions>
         </Card>
-        <SystemSriptsView scriptsData={scriptsData}/>
+        <SystemScriptsView scriptsData={scriptsData}/>
         </>
     )
 }
 
-function SystemSriptsView(props) {
+function SystemScriptsView(props) {
     var boolean = true
     return (
         <>
@@ -84,51 +86,6 @@ function SystemSriptsView(props) {
     );
 
 }
-SystemSriptsView.propTypes = {scriptsData: PropTypes.any};
+SystemScriptsView.propTypes = {scriptsData: PropTypes.any};
 
 
-function ScriptCard(props) {
-    const scriptData = props.scriptData;
-    const {baseUrl} = useContext(AppContext);
-
-    // console.log(scriptData)
-
-    const { isLoading: scriptOutputIsLoading, data: scriptOutputData} = useQuery(`scriptOutput-${scriptData.id}`, () => {
-        // console.log(baseUrl + "api/importance")
-        return axios.get(baseUrl + `api/script/${scriptData.id}`)
-    }, {staleTime: 1000*5})
-
-    if (scriptOutputIsLoading){
-        return <h2>Loading...</h2>
-    }
-
-    console.log(scriptOutputData?.data)
-
-    return (
-        <Card sx={{
-            marginBottom: "5px;",
-        }}>
-            <CardContent>
-                <StatusBadge status={scriptOutputData?.data[0].status}/>
-                <Typography variant={"h6"}>
-                    {scriptData.name}
-                </Typography>
-                <Divider light/>
-                <Typography variant={"p"} >
-                    Description: {scriptData.description}
-                </Typography>
-                <Divider light/>
-                <Typography variant={"p"} >
-                    Details: {scriptOutputData?.data[0].details}
-                </Typography>
-                <Divider light/>
-                <Typography variant={"p"} >
-                    Last Ran: {scriptData.lastRan}
-                </Typography>
-                <Divider light />
-            </CardContent>
-        </Card>
-    );
-}
-
-ScriptCard.propTypes = {};

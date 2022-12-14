@@ -14,12 +14,12 @@ import {
 import SaveIcon from '@mui/icons-material/Save';
 import {useQuery} from "react-query";
 import axios from 'axios'
-import {AppContext} from "../../index";
+import {AppContext} from "../../../index";
 
 
 import {useContext} from "react";
 import {useParams} from "react-router-dom";
-import AddSystemPage from "./AddSystem.page";
+import AddSystemPage from "../AddSystem.page";
 import ViewSystemPage from "./ViewSystem.Page";
 import EditSystemPage from "./EditSystem.page";
 
@@ -33,6 +33,7 @@ export default function SystemPage(props) {
 
     const conditionalOutput = () => {
         {
+
             if (params.systemId === "add" ) {
                 return <AddSystemPage/>
             } else if (isFinite(params.systemId) && params.edit !== undefined) {

@@ -1,13 +1,23 @@
-import {Box, Button, Card, Grid, Paper, Typography} from "@mui/material";
-
+import {Box, Button, Card, CardContent, Divider, Grid, Typography} from "@mui/material";
+import {AppContext} from "../../index";
+import {useQuery} from "react-query";
+import axios from "axios";
+import {useContext, useState} from "react";
+import SystemCard from "./system/SystemCard";
 import {Link as RouterLink} from "react-router-dom";
 
-import DashboardSystemView from "./DashboardSystemView";
+export default function DashboardPage(props){
 
+    const {baseUrl} = useContext(AppContext);
 
+    const { isLoading: systemsIsLoading, data: systemsData } = useQuery('systems', () => {
+        // console.log(baseUrl + "api/importance")
+        return axios.get(baseUrl + "api/system")
+    }, {staleTime: 1000*5})
 
-
-export default function DashboardPage() {
+    if (systemsIsLoading){
+        return <></>
+    }
 
     return (
         <>
@@ -22,8 +32,11 @@ export default function DashboardPage() {
                     }}
                 >Add System</Button>
             </Box>
-            <DashboardSystemView/>
+            <Grid container spacing={2}>
+                {systemsData?.data.map((card, index) => {
+                    return <SystemCard card={card} index={index} key={index}/>
+                })}
+            </Grid>
         </>
-
     )
 }

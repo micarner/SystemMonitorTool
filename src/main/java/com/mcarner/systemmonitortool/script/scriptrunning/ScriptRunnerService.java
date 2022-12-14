@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -63,25 +65,76 @@ public class ScriptRunnerService {
             //TODO: Since this is transactional, we need to make sure error handling is ok here.
 
             //Parse
-            ScriptOutputParser scriptOutputParser = new ScriptOutputParser(systemRepo);
-            scriptOutput = scriptOutputParser.parse(scriptOutput);
-            scriptOutput.setScript(script);
-            scriptOutput.setSystem(script.getSystem());
+//            ScriptOutputParser scriptOutputParser = new ScriptOutputParser(systemRepo,scriptOutputRepo);
+            assert scriptOutput != null;
+            scriptOutput = parse(scriptOutput);
+
 
             //Set Script info
             //If System is null, the systemId isn't set right.
             script.setName(scriptOutput.getScriptName());
             script.getScriptOutputs().add(scriptOutput);
+            script.setSystem(scriptOutput.getSystem());
 
 
-            scriptOutputRepo.save(scriptOutput);
+
+
             script.setLastRan(scriptOutput.getRanAt());
             scriptRepo.save(script);
 
         }
 
 
+    }
 
+    public ScriptOutput parse(ScriptOutput scriptOutput) {
+
+        //Parse stdOutArrayList
+        ArrayList<String> rawScriptOutput = scriptOutput.getRawScriptOutput();
+        try {
+            List<String> outputString = Arrays.stream(rawScriptOutput.get(0).split("_")).toList();
+            //Metric or issue
+            if (outputString.get(0).equalsIgnoreCase("M")){
+                scriptOutput.setScriptType(ScriptType.METRIC);
+            } else if (outputString.get(0).equalsIgnoreCase("I")){
+                scriptOutput.setScriptType(ScriptType.ISSUE);
+            } else {
+                throw new Exception("ScriptType not valid, value found: \"" + outputString.get(0) + "\"");
+            }
+
+            //Status
+            if (outputString.get(1).equalsIgnoreCase(Status.OK.name())){
+                scriptOutput.setStatus(Status.OK);
+            } else if (outputString.get(1).equalsIgnoreCase(Status.WARN.name())){
+                scriptOutput.setStatus(Status.WARN);
+            } else if (outputString.get(1).equalsIgnoreCase(Status.CRIT.name())){
+                scriptOutput.setStatus(Status.CRIT);
+            } else if (outputString.get(1).equalsIgnoreCase(Status.UNKNOWN.name())){
+                scriptOutput.setStatus(Status.UNKNOWN);
+            } else {
+                throw new Exception("Status was not valid: \"" + outputString.get(1) + "\"" );
+            }
+
+            //System id
+            scriptOutput.setSystem(systemRepo.findSystemById(Long.parseLong(outputString.get(2))));
+
+            //Script name
+            scriptOutput.setScriptName(outputString.get(3));
+
+            //Values
+            scriptOutput.setValues(outputString.get(4));
+
+            //Details
+            scriptOutput.setDetails(outputString.get(5));
+
+            scriptOutputRepo.save(scriptOutput);
+
+        } catch (Exception e) {
+//                throw new RuntimeException(e);
+            log.error("ScriptOutput was not valid: " + scriptOutput.getFilename());
+        }
+
+        return scriptOutput;
 
     }
 

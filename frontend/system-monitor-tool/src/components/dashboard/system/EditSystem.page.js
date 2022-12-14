@@ -1,6 +1,6 @@
 import {Navigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import {AppContext} from "../../index";
+import {AppContext} from "../../../index";
 import {useMutation, useQuery} from "react-query";
 import axios from "axios";
 import {
@@ -16,7 +16,8 @@ import {
     TextField, Typography
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import ErrorMsgElement from "../common/ErrorMsgElement";
+import ErrorMsgElement from "../../common/ErrorMsgElement";
+import Loading from "../../common/Loading";
 
 export default function EditSystemPage(props){
 
@@ -82,7 +83,7 @@ export default function EditSystemPage(props){
 
 
     if (importanceIsLoading && tagsIsLoading && systemIsLoading){
-        return <h2>Loading...</h2>
+        return <Loading/>
     }
 
 

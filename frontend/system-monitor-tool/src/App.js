@@ -3,7 +3,10 @@ import './App.css';
 import {Box} from "@mui/material";
 import {Route,Routes} from "react-router-dom";
 import DashboardPage from "./components/dashboard/Dashboard.page";
-import SystemPage from "./components/dashboard/System.page";
+import SystemPage from "./components/dashboard/system/System.page";
+import ScriptPage from "./components/dashboard/system/script/Script.page";
+
+
 
 
 function App() {
@@ -26,6 +29,7 @@ function App() {
                 <Route path="management" element={<DashboardPage/>}/>
                 <Route path="system/:systemId" element={<SystemPage/>}/>
                 <Route path="system/:systemId/:edit" element={<SystemPage/>}/>
+                <Route path="script/:scriptId/:edit" element={<ScriptPage/>}/>
             </Routes>
 
 

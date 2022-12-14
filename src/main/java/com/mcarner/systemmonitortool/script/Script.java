@@ -54,6 +54,7 @@ public class Script {
 
     @OneToMany(mappedBy = "script", orphanRemoval = true)
     @OrderBy("script_id asc")
+    @ToString.Exclude
     private List<ScriptOutput> scriptOutputs = new ArrayList<>();
 
     //How far to look back when grabbing scriptOutput data
