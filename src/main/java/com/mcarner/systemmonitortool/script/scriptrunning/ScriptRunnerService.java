@@ -6,13 +6,13 @@ import com.mcarner.systemmonitortool.script.ScriptRepository;
 import com.mcarner.systemmonitortool.script.parsers.ScriptOutputParser;
 import com.mcarner.systemmonitortool.script.runners.PowershellRunner;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
-import com.mcarner.systemmonitortool.system.System;
 import com.mcarner.systemmonitortool.system.SystemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -29,6 +29,7 @@ public class ScriptRunnerService {
 
 
     @Scheduled(fixedRate = 6000)
+    @Transactional
     public void runScripts(){
         //TODO: If you need performance, iterate through the table
         //Get scripts from database
@@ -59,15 +60,19 @@ public class ScriptRunnerService {
                 log.error(e.getLocalizedMessage());
             }
 
+            //TODO: Since this is transactional, we need to make sure error handling is ok here.
+
             //Parse
-            ScriptOutputParser scriptOutputParser = new ScriptOutputParser();
+            ScriptOutputParser scriptOutputParser = new ScriptOutputParser(systemRepo);
             scriptOutput = scriptOutputParser.parse(scriptOutput);
+            scriptOutput.setScript(script);
+            scriptOutput.setSystem(script.getSystem());
 
             //Set Script info
             //If System is null, the systemId isn't set right.
             script.setName(scriptOutput.getScriptName());
             script.getScriptOutputs().add(scriptOutput);
-            script.setSystem(systemRepo.findSystemById(scriptOutput.getSystemId()));
+
 
             scriptOutputRepo.save(scriptOutput);
             script.setLastRan(scriptOutput.getRanAt());

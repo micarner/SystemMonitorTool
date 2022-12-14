@@ -21,15 +21,16 @@ export default function SystemCard(props) {
                     navigate(`/system/${id}`)
                 }}>
                 <CardContent>
-                    <Typography variant={"h6"} gutterBottom>
+
+                    <Typography variant={"h6"} >
                         {name}
                     </Typography>
                     <Divider light/>
-                    <Typography variant={"caption"} gutterBottom>
+                    <Typography variant={"caption"} >
                         Importance:{importance}
                     </Typography>
                     <Divider light/>
-                    <Typography variant={"caption"} gutterBottom>
+                    <Typography variant={"caption"} >
                         State:{state}
                     </Typography>
                 </CardContent>

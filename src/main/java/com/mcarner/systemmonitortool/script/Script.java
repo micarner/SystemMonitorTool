@@ -56,6 +56,9 @@ public class Script {
     @OrderBy("script_id asc")
     private List<ScriptOutput> scriptOutputs = new ArrayList<>();
 
-
+    //How far to look back when grabbing scriptOutput data
+    //Defaults to x, but can be manually changed by
+    @Column(name = "script_output_time_window")
+    private Long scriptOutputTimeWindow = 300000L;
 
 }

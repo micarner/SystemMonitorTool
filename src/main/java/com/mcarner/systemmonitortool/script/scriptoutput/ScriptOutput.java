@@ -4,6 +4,7 @@ package com.mcarner.systemmonitortool.script.scriptoutput;
 import com.mcarner.systemmonitortool.script.Script;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
 import com.mcarner.systemmonitortool.script.scriptrunning.Status;
+import com.mcarner.systemmonitortool.system.System;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -71,8 +72,9 @@ public class ScriptOutput {
     private Script script;
 
 
-    @Column(name = "system_id")
-    private Long systemId;
+    @ManyToOne
+    @JoinColumn(name = "system_id")
+    private System system;
 
 }
 

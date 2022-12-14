@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ScriptOutputDto implements Serializable {
     private final Long id;
     private final ScriptType scriptType;
+    private final String details;
     private final Status status;
     private final LocalDateTime ranAt;
     private final String values;

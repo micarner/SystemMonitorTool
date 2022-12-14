@@ -8,6 +8,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import {Edit} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import * as PropTypes from "prop-types";
+import StatusBadge from "./StatusBadge";
 
 
 export default function ViewSystemPage(props){
@@ -28,6 +29,7 @@ export default function ViewSystemPage(props){
     if (syatemIsLoading && scriptsAreLoading){
         return <h2>Loading...</h2>
     }
+    console.log(systemData?.data)
 
     const {id, name, description, importance, state, tags} = systemData?.data;
     return (
@@ -36,23 +38,23 @@ export default function ViewSystemPage(props){
             marginBottom: "20px;",
         }}>
             <CardContent>
-                <Typography variant={"h6"} gutterBottom>
+                <Typography variant={"h6"} >
                     Name: {name}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     Description: {description}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     Tags: {tags.map(tag => tag.name).join(", ")}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     Importance:{importance}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     State:{state}
                 </Typography>
             </CardContent>
@@ -76,7 +78,7 @@ function SystemSriptsView(props) {
     return (
         <>
             {props.scriptsData?.data.map(scriptData =>
-                <ScriptCard scriptData={scriptData}/>
+                <ScriptCard scriptData={scriptData} key={scriptData.id}/>
             )}
         </>
     );
@@ -89,6 +91,8 @@ function ScriptCard(props) {
     const scriptData = props.scriptData;
     const {baseUrl} = useContext(AppContext);
 
+    // console.log(scriptData)
+
     const { isLoading: scriptOutputIsLoading, data: scriptOutputData} = useQuery(`scriptOutput-${scriptData.id}`, () => {
         // console.log(baseUrl + "api/importance")
         return axios.get(baseUrl + `api/script/${scriptData.id}`)
@@ -98,27 +102,30 @@ function ScriptCard(props) {
         return <h2>Loading...</h2>
     }
 
+    console.log(scriptOutputData?.data)
+
     return (
         <Card sx={{
             marginBottom: "5px;",
         }}>
             <CardContent>
+                <StatusBadge status={scriptOutputData?.data[0].status}/>
                 <Typography variant={"h6"}>
                     {scriptData.name}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     Description: {scriptData.description}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
-                    Details: {scriptData.details}
+                <Typography variant={"p"} >
+                    Details: {scriptOutputData?.data[0].details}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} gutterBottom>
+                <Typography variant={"p"} >
                     Last Ran: {scriptData.lastRan}
                 </Typography>
-                <Divider light gutterBottom/>
+                <Divider light />
             </CardContent>
         </Card>
     );

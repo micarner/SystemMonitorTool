@@ -54,15 +54,24 @@ public class SystemMonitorToolApplication {
     //      - FIXED, changed data.sql to import.sql
 
     //TODO: Link Script to Systems
-    //  - ISSUES:
-    //      - Bidirectional relationship between script and scriptoutput is causing issues:
-    //        failed to lazily initialize a collection of role:
     //  - View System
     //      x Section for Issues
+    //      x ScriptOutput keeps returning null from db (because the script_id column is null)
+    //      x Change ScriptOutput to have relationship with System and Script
     //      - List names of issues and status
+    //          - description needs to be set manually
+    //          - details exists in Script, but really it needs to be the most recent details from ScriptOutput
+    //  - Issues
+    //      - Edit Issue.
+    //          - Click edit icon, go to system/#/script/# and edit description
     //  - Dashboard
     //      - # metrics, # Issues being monitored
     //      - Card Badge displaying Status
+
+    //  x ISSUES:
+    //      x Bidirectional relationship between script and scriptoutput is causing issues:
+    //        failed to lazily initialize a collection of role:
+    //        SOLVED: made runScripts() @Transactional to fix issues with JPA session getting closed
 
 
     //TODO: Logging and notifications

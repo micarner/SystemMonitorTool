@@ -3,14 +3,24 @@ package com.mcarner.systemmonitortool.script.parsers;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
 import com.mcarner.systemmonitortool.script.scriptrunning.Status;
+import com.mcarner.systemmonitortool.system.SystemRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class ScriptOutputParser {
+
+    @Autowired
+    private final SystemRepository systemRepo;
+
 
     public ScriptOutput parse(ScriptOutput scriptOutput) {
 
@@ -41,7 +51,7 @@ public class ScriptOutputParser {
             }
 
             //System id
-            scriptOutput.setSystemId(Long.parseLong(outputString.get(2)));
+            scriptOutput.setSystem(systemRepo.findSystemById(Long.parseLong(outputString.get(2))));
 
             //Script name
             scriptOutput.setScriptName(outputString.get(3));
