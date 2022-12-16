@@ -7,7 +7,11 @@ export default function StatusBadge (props) {
     var backgroundColor = ""
     var textColor = ""
     var status = props?.status
-    if(props?.status === undefined){
+    var count = props?.count
+    if (count === undefined){
+        count = ""
+    }
+    if(status === undefined){
         status = "INVALID STATUS"
     }
     switch (status) {
@@ -22,6 +26,10 @@ export default function StatusBadge (props) {
         case "CRIT":
             backgroundColor = "#DA1E28";
             textColor = "black"
+            break;
+        case "DOWN":
+            backgroundColor = "#000000";
+            textColor = "white"
             break;
         case "UNKNOWN":
             backgroundColor = "#6F6F6F";
@@ -42,7 +50,7 @@ export default function StatusBadge (props) {
                     color: textColor
                 }
             }}
-        >{status}</Button>
+        >{count} {status}</Button>
     )
 
 }

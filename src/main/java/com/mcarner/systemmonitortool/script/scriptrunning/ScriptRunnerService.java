@@ -1,6 +1,7 @@
 package com.mcarner.systemmonitortool.script.scriptrunning;
 
 import com.mcarner.systemmonitortool.script.Script;
+import com.mcarner.systemmonitortool.script.Status;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.ScriptRepository;
 import com.mcarner.systemmonitortool.script.parsers.ScriptOutputParser;

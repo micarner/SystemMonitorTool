@@ -1,7 +1,8 @@
 package com.mcarner.systemmonitortool.script.scriptoutput;
 
+import com.mcarner.systemmonitortool.script.Status;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
-import com.mcarner.systemmonitortool.script.scriptrunning.Status;
+
 import lombok.Data;
 
 import java.io.Serializable;

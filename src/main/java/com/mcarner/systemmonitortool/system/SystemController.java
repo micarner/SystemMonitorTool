@@ -1,9 +1,8 @@
 package com.mcarner.systemmonitortool.system;
 
-import com.mcarner.systemmonitortool.script.dto.UpdateScriptDto;
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.dto.SystemDto;
-import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
+import com.mcarner.systemmonitortool.system.values.Importance;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +26,16 @@ public class SystemController {
         return ResponseEntity.ok().body(systemService.getSystem(id));
     }
 
-    @GetMapping("/system/{id}/scripts")
-    ResponseEntity<?> getSystemScripts(@PathVariable Long id){
-        return ResponseEntity.ok().body(systemService.getSystemScripts(id));
-    }
 
-    @PutMapping("/scripts")
-    ResponseEntity<?> updateScript(@RequestBody UpdateScriptDto updateScriptRequest){
-        return ResponseEntity.ok().body(systemService.updateScript(updateScriptRequest));
-    }
-
+    //TODO: Recursive loop when serializing because of system/script bidirectional
+//    @GetMapping("/system")
+//    ResponseEntity<?> getSystems(){
+//        return ResponseEntity.ok().body(systemService.getAllSystems());
+//    }
 
     @GetMapping("/system")
-    ResponseEntity<?> getSystems(){
-        return ResponseEntity.ok().body(systemService.getAllSystems());
+    ResponseEntity<?> getSystemsWithStatuses(){
+        return ResponseEntity.ok().body(systemService.getAllSystemsWithState());
     }
 
     @PostMapping("/system/new")
@@ -53,19 +48,28 @@ public class SystemController {
     @PostMapping("/system/update")
     ResponseEntity<?> updateSystem(@RequestBody SystemDto updateSystem){
         System updatedSystem = systemService.upsertSystem(updateSystem);
-        log.info("Created new system: ({}) - {}",updatedSystem.getId(),updatedSystem.getName());
+        log.info("Updated system: ({}) - {}",updatedSystem.getId(),updatedSystem.getName());
         return ResponseEntity.ok().body(updatedSystem);
     }
 
     @GetMapping("/importance")
     ResponseEntity<?> getImportance(){
-        return ResponseEntity.ok().body(Arrays.stream(IMPORTANCE.values()).map(Enum::name).collect(Collectors.toList()));
+        return ResponseEntity.ok().body(Arrays.stream(Importance.values()).map(Enum::name).collect(Collectors.toList()));
     }
 
     @GetMapping("/tags")
     ResponseEntity<?> getAllTags(){
         return ResponseEntity.ok().body(systemService.getAllTags());
     }
+
+    @GetMapping("/system/{id}/scripts")
+    ResponseEntity<?> getSystemScripts(@PathVariable Long id){
+        return ResponseEntity.ok().body(systemService.getSystemScripts(id));
+    }
+
+
+
+
 
 
 }

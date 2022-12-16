@@ -9,6 +9,8 @@ import java.util.List;
 public interface ScriptRepository extends JpaRepository<Script, Long> {
     Script findScriptByFilename(String filename);
     List<ScriptDto> findScriptsBySystemIdOrderByIdAsc(Long systemId);
+//    List<Script> findScriptsBySystemIdOrderByIdAsc(Long systemId);
+    List<Script> findScriptsBySystemId(Long systemId);
 
     ScriptDto findScriptById(Long scriptId);
 

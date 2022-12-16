@@ -18,7 +18,7 @@ public class ScriptDto implements Serializable {
     private final String details;
     private final LocalDateTime lastRan;
 //    private final Long scriptOutputTimeWindow;
-//    private final Long frequencyToCheck;
+    private final Long frequencyToCheck;
 
 //    public ScriptDto(Script script) {
 //        this.id = script.getId();

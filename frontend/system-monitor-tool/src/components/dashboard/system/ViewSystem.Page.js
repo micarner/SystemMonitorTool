@@ -28,12 +28,12 @@ export default function ViewSystemPage(props){
         return axios.get(baseUrl + `api/system/${props.id}/scripts`)
     }, {staleTime: 1000*5})
 
-    if (syatemIsLoading && scriptsAreLoading){
+    if (syatemIsLoading || scriptsAreLoading){
         return <Loading/>
     }
-    console.log(systemData?.data)
+    // console.log(systemData?.data)
 
-    const {id, name, description, importance, state, tags} = systemData?.data;
+    const {id, name, description, importance, status, tags} = systemData?.data;
     return (
         <>
         <Card sx={{
@@ -57,7 +57,7 @@ export default function ViewSystemPage(props){
                 </Typography>
                 <Divider light/>
                 <Typography variant={"p"} >
-                    State:{state}
+                    Status:{status}
                 </Typography>
             </CardContent>
             <CardActions>

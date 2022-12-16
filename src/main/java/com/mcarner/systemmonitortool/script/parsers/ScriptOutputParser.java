@@ -3,7 +3,7 @@ package com.mcarner.systemmonitortool.script.parsers;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
-import com.mcarner.systemmonitortool.script.scriptrunning.Status;
+
 import com.mcarner.systemmonitortool.system.SystemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

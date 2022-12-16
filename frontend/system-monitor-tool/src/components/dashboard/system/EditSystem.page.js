@@ -1,4 +1,4 @@
-import {Navigate, useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {AppContext} from "../../../index";
 import {useMutation, useQuery} from "react-query";
@@ -18,10 +18,12 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import ErrorMsgElement from "../../common/ErrorMsgElement";
 import Loading from "../../common/Loading";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function EditSystemPage(props){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const {baseUrl} = useContext(AppContext);
 
@@ -82,7 +84,7 @@ export default function EditSystemPage(props){
     }, [systemQueryStatus,systemData]);
 
 
-    if (importanceIsLoading && tagsIsLoading && systemIsLoading){
+    if (importanceIsLoading || tagsIsLoading || systemIsLoading){
         return <Loading/>
     }
 
@@ -149,6 +151,12 @@ export default function EditSystemPage(props){
                         mutation.mutate({id:params.systemId,name:name,description:description,importance:importance,tagIds:tags})
                     }}
                 >Save System</Button>
+                <Button
+                    startIcon={<CancelIcon/>}
+                    onClick={() => {
+                        navigate(-1)
+                    }}
+                >Cancel</Button>
                 <ErrorMsgElement errMsg={errMsg}/>
             </CardActions>
 

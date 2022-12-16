@@ -55,11 +55,11 @@ public class SystemMonitorToolApplication {
     //      - FIXED, changed data.sql to import.sql
 
     //TODO: Link Script to Systems
-    //  - Script
-    //      - Edit Issue.
-    //          - Click edit icon, go to /script/# and edit description
+    //  x Edit Script
+    //      x Click edit icon, go to /script/# and edit description
+    //      x PROBLEM - I get the same script info when editing both scripts?
     //  - Dashboard
-    //      - # metrics, # Issues being monitored
+    //      - # metrics, # scripts being monitored
     //      - Card Badge displaying Number of scripts in OK,WARN,CRIT,ETC
     //          - Badge only visible if it's >0
 
@@ -79,6 +79,9 @@ public class SystemMonitorToolApplication {
     //TODO: Logging and notifications
 
     //TODO: Link systems
+
+    //TODO: PROBLEMS
+    //  - PROBLEM - after saving script changes, it goes back two pages
 
     //TODO: Create management area to create Systems and link them together by severity
     //  x [BACKEND]

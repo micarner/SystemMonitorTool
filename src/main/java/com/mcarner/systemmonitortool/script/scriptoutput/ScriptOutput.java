@@ -2,8 +2,9 @@ package com.mcarner.systemmonitortool.script.scriptoutput;
 
 
 import com.mcarner.systemmonitortool.script.Script;
+import com.mcarner.systemmonitortool.script.Status;
 import com.mcarner.systemmonitortool.script.scriptrunning.ScriptType;
-import com.mcarner.systemmonitortool.script.scriptrunning.Status;
+
 import com.mcarner.systemmonitortool.system.System;
 import lombok.Getter;
 import lombok.Setter;

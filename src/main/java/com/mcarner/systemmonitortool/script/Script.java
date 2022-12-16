@@ -1,5 +1,6 @@
 package com.mcarner.systemmonitortool.script;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.system.System;
 import lombok.AccessLevel;
@@ -29,6 +30,7 @@ public class Script {
     @Column(name = "description", length = 2550)
     private String description;
 
+    //TODO: Delete this, it pulls from most recent ScriptOutput
     @Column(name = "details", length = 2550)
     private String details;
 
@@ -38,9 +40,10 @@ public class Script {
     //      - Multiple metrics: count1=42|count2=21;23;27|count3=73
 
 
-    @ManyToOne
-    @JoinColumn(name = "system_id")
-    private System system;
+//    @ManyToOne
+//    @JoinColumn(name = "system_id")
+//    private System system;
+
 
     @Column(name = "frequency_to_check", nullable = false)
     //In ms //Default every 30s
@@ -61,5 +64,10 @@ public class Script {
     //Defaults to x, but can be manually changed by
     @Column(name = "script_output_time_window")
     private Long scriptOutputTimeWindow = 300000L;
+
+    @ManyToOne
+    @JoinColumn(name = "system_id")
+    @JsonIgnoreProperties("scripts")
+    private System system;
 
 }

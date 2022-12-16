@@ -16,9 +16,9 @@ export default function ScriptCard(props) {
 
     // console.log(scriptData)
 
-    const { isLoading: scriptOutputIsLoading, data: scriptOutputData} = useQuery(`scriptOutput-${scriptData.id}`, () => {
+    const { isLoading: scriptOutputIsLoading, data: scriptOutputData} = useQuery(`script-${scriptData.id}-scriptOutput`, () => {
         // console.log(baseUrl + "api/importance")
-        return axios.get(baseUrl + `api/script/${scriptData.id}`)
+        return axios.get(baseUrl + `api/script/${scriptData.id}/output`)
     }, {staleTime: 1000*5})
 
     if (scriptOutputIsLoading){
@@ -47,7 +47,7 @@ export default function ScriptCard(props) {
                 </Typography>
                 <Divider light/>
                 <Typography variant={"p"} >
-                    Details: {scriptOutputData?.data[0].details}
+                    Details: {scriptOutputData?.data[0]?.details ? scriptOutputData?.data[0].details : ""}
                 </Typography>
                 <Divider light/>
                 <Typography variant={"p"} >
@@ -58,17 +58,17 @@ export default function ScriptCard(props) {
             <CardActions>
                 <Button
                     startIcon={<InfoIcon/>}
-                    // onClick={() => {
-                    //     navigate(`/script/${id}`)
-                    //     // mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
-                    // }}
+                    onClick={() => {
+                        navigate(`/script/${scriptData.id}`)
+                        // mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
+                    }}
                 >More Info</Button>
                 <Button
                     startIcon={<Edit/>}
-                    // onClick={() => {
-                    //     navigate(`/script/${id}/edit`)
-                    //     // mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
-                    // }}
+                    onClick={() => {
+                        navigate(`/script/${scriptData.id}/edit`)
+                        // mutation.mutate({name:name,description:description,importance:importance,tagIds:tags})
+                    }}
                 >Edit</Button>
             </CardActions>
         </Card>

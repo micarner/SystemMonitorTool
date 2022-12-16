@@ -1,10 +1,10 @@
 package com.mcarner.systemmonitortool.system.dto;
 
 
+import com.mcarner.systemmonitortool.script.Status;
 import com.mcarner.systemmonitortool.system.System;
 import com.mcarner.systemmonitortool.system.link.LINK_SEVERITY;
-import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
-import com.mcarner.systemmonitortool.system.values.STATE;
+import com.mcarner.systemmonitortool.system.values.Importance;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,8 +19,8 @@ public class SystemDto implements Serializable {
     private final String name;
     private final String description;
     private final Set<ScriptDto> issuesToMonitor;
-    private final STATE state;
-    private final IMPORTANCE importance;
+    private final Status status;
+    private final Importance importance;
     private final Long linkId;
     private final LINK_SEVERITY linkLinkSeverity;
     private final Long linkReliesOnId;

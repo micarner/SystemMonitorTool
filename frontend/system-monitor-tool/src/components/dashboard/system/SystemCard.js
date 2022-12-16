@@ -1,11 +1,16 @@
 import {Card, CardContent, Divider, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import StatusBadge from "../../common/StatusBadge";
 
 export default function SystemCard(props) {
 
     const navigate = useNavigate();
 
-    const {id, name, importance, state} = props.card;
+    //TODO:
+    //  - Create BadgeSection that contains StatusBadges
+    //  - Check for and print
+
+    const {id, name, importance, status, statusCounts} = props.card;
     const index = props.index
     return (
         <Grid item>
@@ -21,6 +26,11 @@ export default function SystemCard(props) {
                     navigate(`/system/${id}`)
                 }}>
                 <CardContent>
+                    {statusCounts.map(statusCount => {
+                        //TODO: How to handle hashmap serialization in DTO? probably some jsonproperties
+                        //  or jackson annotation
+                        return <StatusBadge status={statusCount.status} count={statusCount.count}/>
+                    })}
 
                     <Typography variant={"h6"} >
                         {name}
@@ -31,7 +41,7 @@ export default function SystemCard(props) {
                     </Typography>
                     <Divider light/>
                     <Typography variant={"caption"} >
-                        State:{state}
+                        Status:{status}
                     </Typography>
                 </CardContent>
             </Card>

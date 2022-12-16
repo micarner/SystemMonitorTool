@@ -63,7 +63,7 @@ export default function AddSystemPage(props){
         }
     }, [name]);
 
-    if (importanceIsLoading && tagsIsLoading){
+    if (importanceIsLoading || tagsIsLoading){
         return <Loading/>
     }
     

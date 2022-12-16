@@ -1,14 +1,14 @@
 package com.mcarner.systemmonitortool.system;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mcarner.systemmonitortool.script.Script;
 import com.mcarner.systemmonitortool.system.link.Link;
 import com.mcarner.systemmonitortool.system.tags.Tag;
-import com.mcarner.systemmonitortool.system.values.IMPORTANCE;
-import com.mcarner.systemmonitortool.system.values.STATE;
+import com.mcarner.systemmonitortool.system.values.Importance;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
@@ -32,18 +32,17 @@ public class System {
     private String description;
 
 
-
 //    @OneToMany(mappedBy = "system", orphanRemoval = true)
 //    @ToString.Exclude
 //    private Set<Script> scripts = new LinkedHashSet<>();
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
-    private STATE state = STATE.OK;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "status", nullable = false)
+//    private STATUS status = STATUS.OK;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "importance", nullable = false)
-    private IMPORTANCE importance = IMPORTANCE.MEDIUM;
+    private Importance importance = Importance.MEDIUM;
 
     @OneToOne(mappedBy = "system", orphanRemoval = true)
     private Link link;
@@ -54,13 +53,18 @@ public class System {
             inverseJoinColumns = @JoinColumn(name = "tags_id"))
     private Set<Tag> tags = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "system", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("system")
+    private Set<Script> scripts = new LinkedHashSet<>();
+
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "name = " + name + ", " +
                 "description = " + description + ", " +
-                "state = " + state + ", " +
+//                "status = " + status + ", " +
                 "importance = " + importance + ", " +
                 "link = " + link + ")";
     }

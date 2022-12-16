@@ -13,9 +13,9 @@ export default function ScriptPage(props){
 
     const conditionalOutput = () => {
         {
-            if (isFinite(params.systemId) && params.edit !== undefined) {
+            if (isFinite(params.scriptId) && params.edit !== undefined) {
                 return <EditScriptPage/>
-            } else if (isFinite(params.systemId)){
+            } else if (isFinite(params.scriptId)){
                 return <ViewScriptPage id={params.scriptId}/>
             } else {
                 return <>
