@@ -6,10 +6,6 @@ export default function SystemCard(props) {
 
     const navigate = useNavigate();
 
-    //TODO:
-    //  - Create BadgeSection that contains StatusBadges
-    //  - Check for and print
-
     const {id, name, importance, status, statusCounts} = props.card;
     const index = props.index
     return (
@@ -26,11 +22,9 @@ export default function SystemCard(props) {
                     navigate(`/system/${id}`)
                 }}>
                 <CardContent>
-                    {statusCounts.map(statusCount => {
-                        //TODO: How to handle hashmap serialization in DTO? probably some jsonproperties
-                        //  or jackson annotation
-                        return <StatusBadge status={statusCount.status} count={statusCount.count}/>
-                    })}
+                    {Object.keys(statusCounts).map((key, index) =>
+                        <StatusBadge status={key} count={statusCounts[key]} key={index}/>
+                    )}
 
                     <Typography variant={"h6"} >
                         {name}
@@ -41,7 +35,7 @@ export default function SystemCard(props) {
                     </Typography>
                     <Divider light/>
                     <Typography variant={"caption"} >
-                        Status:{status}
+                        Status:<StatusBadge status={status}/>
                     </Typography>
                 </CardContent>
             </Card>
