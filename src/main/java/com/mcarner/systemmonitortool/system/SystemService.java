@@ -8,7 +8,7 @@ import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
 import com.mcarner.systemmonitortool.system.dto.SystemCreateDto;
 import com.mcarner.systemmonitortool.system.dto.SystemDto;
-import com.mcarner.systemmonitortool.system.dto.SystemSimpleWithStatusDto;
+import com.mcarner.systemmonitortool.system.dto.SystemWithStatusDto;
 import com.mcarner.systemmonitortool.system.tags.Tag;
 import com.mcarner.systemmonitortool.system.tags.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +51,7 @@ public class SystemService {
         }
         system.setImportance(systemDto.getImportance());
         return systemRepo.save(system);
+
     }
 
     public void deleteSystem(Long systemId) {
@@ -65,9 +67,6 @@ public class SystemService {
         return systemRepo.findAll();
     }
 
-    public System getSystem(Long id) {
-        return systemRepo.findById(id).orElseThrow();
-    }
 
     public List<ScriptDto> getSystemScripts(Long id){
         //Return Script details as well as list of metrics and values and whatnot
@@ -75,11 +74,24 @@ public class SystemService {
     }
 
 
-    public ArrayList<SystemSimpleWithStatusDto> getAllSystemsWithState() {
+    public SystemWithStatusDto getSystemWithStatus(Long id) {
+        System system = systemRepo.findSystemById(id);
+        List<System> systemList = new ArrayList<>();
+        systemList.add(system);
+        ArrayList<SystemWithStatusDto> statusDtos = calculateSystemStatuses(systemList);
+
+        return statusDtos.get(0);
+    }
+    public ArrayList<SystemWithStatusDto> getAllSystemsWithState() {
         //Get systems
         List<System> systems = systemRepo.findAll();
-        ArrayList<SystemSimpleWithStatusDto> statusDtos = new ArrayList<>();
 
+        return calculateSystemStatuses(systems);
+
+    }
+
+    private ArrayList<SystemWithStatusDto> calculateSystemStatuses(List<System> systems) {
+        ArrayList<SystemWithStatusDto> statusDtos = new ArrayList<>();
         for (System system :
                 systems) {
             List<Script> scripts = scriptRepo.findScriptsBySystemId(system.getId());
@@ -114,16 +126,19 @@ public class SystemService {
 
 
 
-            SystemSimpleWithStatusDto dto = new SystemSimpleWithStatusDto(
+//            SystemWithStatusDto dto = new SystemWithStatusDto(
+//                    system.getId(), system.getName(), system.getDescription(), system.getImportance(),
+//                    status, statusCounts, system.getTags().stream().map(Tag::getId).collect(Collectors.toSet())
+//            );
+            SystemWithStatusDto dto = new SystemWithStatusDto(
                     system.getId(), system.getName(), system.getDescription(), system.getImportance(),
-                    status, statusCounts
+                    status, statusCounts, system.getTags()
             );
             statusDtos.add(dto);
 
         }
 
         return statusDtos;
-
     }
 
     private HashMap<String, Long> addStatusCount(Status status, HashMap<String, Long> statusCounts) {

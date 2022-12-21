@@ -40,11 +40,16 @@ export default function ViewSystemPage(props){
             marginBottom: "20px;",
         }}>
             <CardContent>
+                <StatusBadge status={status}/>
                 <Typography variant={"h6"} >
                     Name: {name}
                 </Typography>
                 <Divider light/>
-                <Typography variant={"p"} >
+                <Typography variant={"p"}>
+                    System ID: {id}
+                </Typography>
+                <Divider light/>
+                <Typography variant={"p"}>
                     Description: {description}
                 </Typography>
                 <Divider light/>

@@ -68,7 +68,7 @@ public class PowershellRunner implements ScriptRunner {
             if (stdErrorArrayList.size() > 0){
                 //Something wrong happened
                 //Throw error
-            } else if (stdOutArrayList.size() != 1){
+            } else if (stdOutArrayList.size() < 1){
                 //Something wrong happened
                 //Throw error
             }

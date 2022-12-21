@@ -23,7 +23,7 @@ public class SystemController {
 
     @GetMapping("/system/{id}")
     ResponseEntity<?> getSystem(@PathVariable Long id){
-        return ResponseEntity.ok().body(systemService.getSystem(id));
+        return ResponseEntity.ok().body(systemService.getSystemWithStatus(id));
     }
 
 
@@ -42,14 +42,14 @@ public class SystemController {
     ResponseEntity<?> createNewSystem(@RequestBody SystemCreateDto systemCreateDto){
         System newlyCreatedSystem = systemService.createSystem(systemCreateDto);
         log.info("Created new system: ({}) - {}",newlyCreatedSystem.getId(),newlyCreatedSystem.getName());
-        return ResponseEntity.ok().body(newlyCreatedSystem);
+        return ResponseEntity.ok().body("success");
     }
 
     @PostMapping("/system/update")
     ResponseEntity<?> updateSystem(@RequestBody SystemDto updateSystem){
         System updatedSystem = systemService.upsertSystem(updateSystem);
         log.info("Updated system: ({}) - {}",updatedSystem.getId(),updatedSystem.getName());
-        return ResponseEntity.ok().body(updatedSystem);
+        return ResponseEntity.ok().body("success");
     }
 
     @GetMapping("/importance")

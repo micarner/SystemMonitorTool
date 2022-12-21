@@ -98,16 +98,16 @@ export default function EditSystemPage(props){
     }
 
 
-
+    const margin = "25px"
 
 
     return (
         <Card>
             <CardContent>
-                <Typography variant={"h6"}>
+                <Typography variant={"h6"} sx={{ml: "4px", mb: margin}}>
                     System Name: {name}
                 </Typography>
-                <Stack direction={"row"}>
+                <Stack direction={"row"} spacing={2} sx={{mb:margin}}>
                     {/*<TextField*/}
                     {/*    label={"Name"}*/}
                     {/*    value={name}*/}
@@ -125,7 +125,7 @@ export default function EditSystemPage(props){
                     </FormControl>
                     <FormControl>
                         <InputLabel>Tags</InputLabel>
-                        <Select multiple value={tags} label="Tags" sx={{minWidth:"200px;"}} onChange={(e) => setTags(e.target.value)}>
+                        <Select multiple value={tags} label="Tags" sx={{minWidth:"300px;"}} onChange={(e) => setTags(e.target.value)}>
                             {tagsData?.data.map(option => (
                                 <MenuItem key={option.name} value={option.id}>
                                     {option.name}
@@ -141,7 +141,8 @@ export default function EditSystemPage(props){
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     fullWidth
-                    multiline/>
+                    multiline
+                />
             </CardContent>
             <CardActions>
                 <Button

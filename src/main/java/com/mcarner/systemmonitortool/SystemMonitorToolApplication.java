@@ -54,16 +54,14 @@ public class SystemMonitorToolApplication {
     //  - Fix TAGS preloaded in resources.import.sql (not working since switching to MySQL
     //      - FIXED, changed data.sql to import.sql
 
-    //TODO: Link Script to Systems
+    //Link Script to Systems
     //  x Edit Script
     //      x Click edit icon, go to /script/# and edit description
     //      x PROBLEM - I get the same script info when editing both scripts?
-    //  - Dashboard
-    //      - # metrics, # scripts being monitored
-    //      - Card Badge displaying Number of scripts in OK,WARN,CRIT,ETC
-    //          - Badge only visible if it's >0
-
-
+    //  x Dashboard
+    //      x # metrics, # scripts being monitored
+    //      x Card Badge displaying Number of scripts in OK,WARN,CRIT,ETC
+    //          x Badge only visible if it's >0
     //  - View System
     //      x Section for Issues
     //      x ScriptOutput keeps returning null from db (because the script_id column is null)
@@ -76,9 +74,53 @@ public class SystemMonitorToolApplication {
     //        SOLVED: made runScripts() @Transactional to fix issues with JPA session getting closed
 
 
-    //TODO: Logging and notifications
+    //TODO: Set up "production ready" deployment
+    //  x Header with navigate to dashboard
+    //  x Store necessary values in import.sql
+    //      x servers
+    //      x Applications
+    //      x Windows services
+    //  x System id available in dashboard somewhere
+    //  - ScriptOutput can handle multiple lines
+    //  - Start setting up scripts and metrics
+    //  - Clean up visuals
+    //      - Status [x] badges size, placement, spacing
+    //      x Edit system page
+    //  - Rework dashboard cards
+    //      - Status badge with a name and thats it.
+    //  - When viewing system and script, status needs to update live
+    //      - Maybe separate status endpoints that give an array of statuses
+    //      - /system/{id}/status - system
+    //      - /system/{id}/statuses - system and scripts
+    //      - /script/{id}/status
+
+    //TODO: System output visuals
+    //  - Need to figure out something before taking it live
 
     //TODO: Link systems
+    //  - Link systems together, this adds them to a list for building CONDITIONS
+    //  - Conditions
+    //      - Select systems and create conditions based on STATUS
+
+    //TODO: Logging and notifications
+    //  - Emails, SMS, slack, teams
+    //  - Escalation after an error exists for a certain amount of time
+    //      - Escalation policy
+
+    //TODO: Dashboard improvements
+    //  - Top bar with metrics
+    //  - Different views
+    //  - Rows grouped by classifications or parent systems
+    //      - Click to expand, showing sub systems
+    //  - Sorting
+    //      - system type
+    //  - Drag and drop?
+    //  - Save views specific to users
+
+    //TODO: Users with permissions and settings
+    //  - USER/ADMIN
+    //  - Personal settings
+    //      - switches to tick on information on certain pages
 
     //TODO: PROBLEMS
     //  - PROBLEM - after saving script changes, it goes back two pages

@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import {Box, Container} from "@mui/material";
+import {AppBar, Box, Container, Toolbar, Typography} from "@mui/material";
 import {Route,Routes} from "react-router-dom";
 import DashboardPage from "./components/dashboard/Dashboard.page";
 import SystemPage from "./components/dashboard/system/System.page";
 import ScriptPage from "./components/dashboard/system/script/Script.page";
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import HeaderBar from "./components/header/HeaderBar";
 
 
 
@@ -19,26 +21,29 @@ function App() {
              overflowY: "auto;",
                backgroundColor: "#f5f5f5"
            }}>
-        {/*Header goes here*/}
-        <Container className={"app-content"}
-             component={"section"}
-             sx={{marginTop: "80px", width:"100%"}}>
+          {/*Header goes here*/}
+          <HeaderBar/>
 
-            <Routes>
-                <Route path="" element={<DashboardPage/>}/>
-                <Route path="management" element={<DashboardPage/>}/>
-
-                <Route path="system/:systemId" element={<SystemPage/>}/>
-                <Route path="system/:systemId/:edit" element={<SystemPage/>}/>
-
-                <Route path="script/:scriptId" element={<ScriptPage/>}/>
-                <Route path="script/:scriptId/:edit" element={<ScriptPage/>}/>
-            </Routes>
+          <Container className={"app-content"}
+                     component={"section"}
+                     sx={{marginTop: "80px", width: "100%"}}>
 
 
-        </Container>
+              <Routes>
+                  <Route path="" element={<DashboardPage/>}/>
+                  <Route path="management" element={<DashboardPage/>}/>
 
-    </Box>
+                  <Route path="system/:systemId" element={<SystemPage/>}/>
+                  <Route path="system/:systemId/:edit" element={<SystemPage/>}/>
+
+                  <Route path="script/:scriptId" element={<ScriptPage/>}/>
+                  <Route path="script/:scriptId/:edit" element={<ScriptPage/>}/>
+              </Routes>
+
+
+          </Container>
+
+      </Box>
   );
 }
 

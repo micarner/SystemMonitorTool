@@ -78,16 +78,18 @@ export default function AddSystemPage(props){
 
 
 
+    const margin = "25px"
+
 
     return (
         <Card>
             <CardContent>
-                <Stack direction={"row"}>
                     <TextField
                         label={"Name"}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        sx={{minWidth: "300px;"}}/>
+                        sx={{minWidth: "300px;",mb:margin}}/>
+                <Stack direction={"row"} spacing={2} sx={{mb:margin}}>
                     <FormControl>
                         <InputLabel>Importance</InputLabel>
                         <Select label="Importance" sx={{minWidth: "200px"}}
@@ -100,7 +102,7 @@ export default function AddSystemPage(props){
                     </FormControl>
                     <FormControl>
                         <InputLabel>Tags</InputLabel>
-                        <Select multiple value={tags} label="Tags" sx={{minWidth:"200px;"}} onChange={(e) => setTags(e.target.value)}>
+                        <Select multiple value={tags} label="Tags" sx={{minWidth:"300px;"}} onChange={(e) => setTags(e.target.value)}>
                             {tagsData?.data.map(option => (
                                 <MenuItem key={option.name} value={option.id}>
                                     {option.name}

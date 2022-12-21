@@ -22,10 +22,7 @@ export default function SystemCard(props) {
                     navigate(`/system/${id}`)
                 }}>
                 <CardContent>
-                    {Object.keys(statusCounts).map((key, index) =>
-                        <StatusBadge status={key} count={statusCounts[key]} key={index}/>
-                    )}
-
+                    <StatusBadge status={status}/>
                     <Typography variant={"h6"} >
                         {name}
                     </Typography>
@@ -34,9 +31,9 @@ export default function SystemCard(props) {
                         Importance:{importance}
                     </Typography>
                     <Divider light/>
-                    <Typography variant={"caption"} >
-                        Status:<StatusBadge status={status}/>
-                    </Typography>
+                    {Object.keys(statusCounts).map((key, index) =>
+                        <StatusBadge status={key} count={statusCounts[key]} key={index}/>
+                    )}
                 </CardContent>
             </Card>
         </Grid>

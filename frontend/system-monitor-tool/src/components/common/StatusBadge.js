@@ -8,8 +8,12 @@ export default function StatusBadge (props) {
     var textColor = ""
     var status = props?.status
     var count = props?.count
+    var size = "small"
+    var padding = "2px"
     if (count === undefined){
         count = ""
+        size = "medium"
+        padding = null
     }
     if(status === undefined){
         status = "INVALID STATUS"
@@ -17,7 +21,7 @@ export default function StatusBadge (props) {
     switch (status) {
         case "OK":
             backgroundColor = "#24A148";
-            textColor = "black"
+            textColor = "white"
             break;
         case "WARN":
             backgroundColor = "#F1C21B";
@@ -40,15 +44,18 @@ export default function StatusBadge (props) {
             textColor = "black"
     }
 
+
     return (
-        <Button
+        <Button size={size} //Size small if counts !== null, such as in SystemCard
             sx={{
                 backgroundColor:backgroundColor,
                 color: textColor,
                 "&:hover":{
                     backgroundColor:backgroundColor,
                     color: textColor
-                }
+                },
+                margin: "5px;",
+                padding: padding
             }}
         >{count} {status}</Button>
     )

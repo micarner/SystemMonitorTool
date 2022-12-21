@@ -4,7 +4,6 @@ import com.mcarner.systemmonitortool.script.Script;
 import com.mcarner.systemmonitortool.script.Status;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.ScriptRepository;
-import com.mcarner.systemmonitortool.script.parsers.ScriptOutputParser;
 import com.mcarner.systemmonitortool.script.runners.PowershellRunner;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
 import com.mcarner.systemmonitortool.system.SystemRepository;
@@ -57,6 +56,7 @@ public class ScriptRunnerService {
 
             //Did something go wrong?
             try {
+                assert rawScriptOutputFuture != null;
                 scriptOutput = rawScriptOutputFuture.get();
             } catch (Exception e) {
 //                throw new RuntimeException(e);
