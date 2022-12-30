@@ -2,7 +2,6 @@ package com.mcarner.systemmonitortool.script;
 
 import com.mcarner.systemmonitortool.script.dto.ScriptDto;
 import com.mcarner.systemmonitortool.script.dto.UpdateScriptDto;
-import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutput;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputDto;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,8 +27,15 @@ public class ScriptService {
         Script script = scriptRepo.findById(scriptId).orElseThrow();
         LocalDateTime lowerBound = LocalDateTime.now().minusNanos(script.getScriptOutputTimeWindow() * 1000000);
         //Need to link script to scriptoutput
-        List<ScriptOutputDto> scriptOutputDtos =
-                scriptOutputRepo.findAllByScriptIdAndRanAtBeforeOrderByRanAtDesc(scriptId, lowerBound);
+        List<ScriptOutputDto> scriptOutputDtos = script.getScriptOutputs()
+                .stream()
+                .filter(s -> s.getRanAt().isAfter(lowerBound))
+                .map(s -> new ScriptOutputDto(s.getId(),s.getScriptType(),s.getScriptName(),s.getDetails(),s.getStatus(),s.getRanAt(),s.getValues()))
+                .collect(Collectors.toList());
+//        List<ScriptOutputDto> scriptOutputDtos =
+                //TODO: This is returning an empty list. Why? Is the repo query method wrong? maybe it should be RanAtAfter
+//                scriptOutputRepo.findAllByScriptIdAndRanAtBeforeOrderByRanAtDesc(scriptId, lowerBound);
+//        scriptOutputRepo.findAllByScriptIdAndRanAtAfterOrderByRanAtDesc(scriptId, lowerBound);
 //        List<ScriptOutputDto> scriptOutputDtos = scriptOutputRepo.findScriptOutputsByScriptId(scriptId);
         return scriptOutputDtos;
     }

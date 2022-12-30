@@ -7,6 +7,7 @@ import com.mcarner.systemmonitortool.script.ScriptRepository;
 import com.mcarner.systemmonitortool.script.runners.PowershellRunner;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputInvalidException;
 import com.mcarner.systemmonitortool.script.scriptoutput.ScriptOutputRepository;
+import com.mcarner.systemmonitortool.system.System;
 import com.mcarner.systemmonitortool.system.SystemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 import static com.mcarner.systemmonitortool.script.scriptrunning.ScriptFinderService.SCRIPTS_FOLDER;
 
@@ -85,9 +88,20 @@ public class ScriptRunnerService {
 
             //Set Script info
             //If System is null, the systemId isn't set right.
-            script.setName(initialScriptOutput.getScriptName());
-            script.setScriptOutputs(scriptOutputArrayList);
+            if (scriptOutputArrayList.size() > 0) {
+                script.setName(scriptOutputArrayList.get(0).getScriptName());
+            }
+            script.getScriptOutputs().addAll(scriptOutputArrayList);
+            Set<System> systems =
+                    scriptOutputArrayList.stream()
+                            .map(ScriptOutput::getSystem).collect(Collectors.toSet());
 
+            script.setSystems(systems);
+            for (System system :
+                    systems) {
+                system.getScripts().add(script);
+            }
+            systemRepo.saveAll(systems);
 
             script.setLastRan(initialScriptOutput.getRanAt());
             scriptRepo.save(script);
@@ -113,11 +127,11 @@ public class ScriptRunnerService {
             parsedScriptOutput.setRawScriptOutput(singleRawScriptOutput);
 
             try {
-                List<String> outputString = Arrays.stream(rawScriptOutput.split("_")).toList();
+                List<String> outputString = Arrays.stream(rawScriptOutput.split("_",-1)).toList();
                 //Metric or issue
-                if (outputString.get(0).equalsIgnoreCase("M")) {
+                if (outputString.get(0).equalsIgnoreCase("METRIC")) {
                     parsedScriptOutput.setScriptType(ScriptType.METRIC);
-                } else if (outputString.get(0).equalsIgnoreCase("I")) {
+                } else if (outputString.get(0).equalsIgnoreCase("ISSUE")) {
                     parsedScriptOutput.setScriptType(ScriptType.ISSUE);
                 } else {
                     throw new ScriptOutputInvalidException("ScriptType not valid, value found: \"" + outputString.get(0) + "\"");
@@ -165,15 +179,7 @@ public class ScriptRunnerService {
             }
         }
 
-//        scriptOutputRepo.saveAll(parsedScriptOutputs);
-
-
-
-
-
-
-
-
+        parsedScriptOutputs = (ArrayList<ScriptOutput>) scriptOutputRepo.saveAll(parsedScriptOutputs);
 
         return parsedScriptOutputs;
 

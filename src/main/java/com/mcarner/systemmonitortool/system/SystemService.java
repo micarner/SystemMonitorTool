@@ -15,11 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +67,12 @@ public class SystemService {
 
     public List<ScriptDto> getSystemScripts(Long id){
         //Return Script details as well as list of metrics and values and whatnot
-        return scriptRepo.getScriptDtosBySystemIdOrderByIdAsc(id);
+//        return scriptRepo.getScriptDtosBySystemIdOrderByIdAsc(id);
+        System system = systemRepo.findSystemById(id);
+        Set<System> systems = new HashSet<>();
+        systems.add(system);
+        return scriptRepo.findAllBySystemsInOrderByIdDesc(systems);
+
     }
 
 

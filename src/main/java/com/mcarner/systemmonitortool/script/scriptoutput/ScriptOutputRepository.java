@@ -11,7 +11,7 @@ public interface ScriptOutputRepository extends JpaRepository<ScriptOutput, Long
 //    List<ScriptOutputDto> findAllById(Long id);
     List<ScriptOutputDto> findAllByScriptId(Long scriptId);
     List<ScriptOutputDto> findAllByScriptIdAndRanAtAfter(Long scriptId, LocalDateTime scriptOutputTimeWindow);
-    List<ScriptOutputDto> findAllByScriptIdAndRanAtBeforeOrderByRanAtDesc(Long scriptId, LocalDateTime scriptOutputTimeWindow);
+    List<ScriptOutputDto> findAllByScriptIdAndRanAtAfterOrderByRanAtDesc(Long scriptId, LocalDateTime scriptOutputTimeWindow);
     List<ScriptOutputDto> findScriptOutputsByScriptId(Long scriptId);
     ScriptOutput findFirstByScriptOrderByRanAtDesc(Script script);
 }
