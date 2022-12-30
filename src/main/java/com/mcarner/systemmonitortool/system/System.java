@@ -9,9 +9,11 @@ import com.mcarner.systemmonitortool.system.values.Importance;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -53,8 +55,10 @@ public class System {
             inverseJoinColumns = @JoinColumn(name = "tags_id"))
     private Set<Tag> tags = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "system", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonIgnoreProperties("system")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "`system_scripts`",
+            joinColumns = @JoinColumn(name = "system_id"),
+            inverseJoinColumns = @JoinColumn(name = "scripts_id"))
     private Set<Script> scripts = new LinkedHashSet<>();
 
 
@@ -67,5 +71,18 @@ public class System {
 //                "status = " + status + ", " +
                 "importance = " + importance + ", " +
                 "link = " + link + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        System system = (System) o;
+        return id != null && Objects.equals(id, system.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

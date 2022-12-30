@@ -27,6 +27,7 @@ public class ScriptFinderService {
 
     public static String HOME_FOLDER = "C:\\CODE\\SystemMonitorTool\\local";
     public static String SCRIPTS_FOLDER = HOME_FOLDER + "\\scripts";
+    public static String SCR_FOLDER = HOME_FOLDER + "\\scripts";
 
     @Scheduled(fixedRate = 6000)
     public void findScripts(){

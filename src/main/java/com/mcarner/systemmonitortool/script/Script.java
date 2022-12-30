@@ -11,7 +11,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -55,7 +57,9 @@ public class Script {
     @Column(name = "last_ran")
     private LocalDateTime lastRan;
 
-    @OneToMany(mappedBy = "script", orphanRemoval = true)
+    @OneToMany(mappedBy = "script"
+//            , orphanRemoval = true
+    )
     @OrderBy("script_id asc")
     @ToString.Exclude
     private List<ScriptOutput> scriptOutputs = new ArrayList<>();
@@ -65,9 +69,7 @@ public class Script {
     @Column(name = "script_output_time_window")
     private Long scriptOutputTimeWindow = 300000L;
 
-    @ManyToOne
-    @JoinColumn(name = "system_id")
-    @JsonIgnoreProperties("scripts")
-    private System system;
+    @ManyToMany(mappedBy = "scripts", fetch = FetchType.LAZY)
+    private Set<System> systems = new LinkedHashSet<>();
 
 }

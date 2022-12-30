@@ -81,8 +81,13 @@ public class SystemMonitorToolApplication {
     //      x Applications
     //      x Windows services
     //  x System id available in dashboard somewhere
-    //  - ScriptOutput can handle multiple lines
+    //  x ScriptOutput can handle multiple lines (may need additional config, but its working)
     //  - Start setting up scripts and metrics
+    //      - Single script, hit multiple servers echo multiple lines of info.
+    //      - ping server, is it up?
+    //      - Disk space
+    //      - What else?
+    //      - Windows service status
     //  - Clean up visuals
     //      - Status [x] badges size, placement, spacing
     //      x Edit system page
@@ -93,6 +98,9 @@ public class SystemMonitorToolApplication {
     //      - /system/{id}/status - system
     //      - /system/{id}/statuses - system and scripts
     //      - /script/{id}/status
+    //  - Delete data after X time
+    //  - Are queries pulling fresh data?
+    //  - Edit system name
 
     //TODO: System output visuals
     //  - Need to figure out something before taking it live

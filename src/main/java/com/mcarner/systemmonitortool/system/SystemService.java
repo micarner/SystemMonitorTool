@@ -70,7 +70,7 @@ public class SystemService {
 
     public List<ScriptDto> getSystemScripts(Long id){
         //Return Script details as well as list of metrics and values and whatnot
-        return scriptRepo.findScriptsBySystemIdOrderByIdAsc(id);
+        return scriptRepo.getScriptDtosBySystemIdOrderByIdAsc(id);
     }
 
 
@@ -94,7 +94,7 @@ public class SystemService {
         ArrayList<SystemWithStatusDto> statusDtos = new ArrayList<>();
         for (System system :
                 systems) {
-            List<Script> scripts = scriptRepo.findScriptsBySystemId(system.getId());
+            List<Script> scripts = scriptRepo.getScriptsBySystemId(system.getId());
             HashMap<String, Long> statusCounts = new HashMap<>();
 
             for (Script script :
